@@ -6,7 +6,7 @@ import { RoadmapCanvas } from "../components/roadmap/RoadmapCanvas";
 import { RoadmapControls } from "../components/roadmap/RoadmapControls";
 import { MilestoneInspector } from "../components/roadmap/MilestoneInspector";
 import { PathComparisonModal } from "../components/comparison/PathComparisonModal";
-import { evaluateGraphState } from "../lib/utils/graphEngine";
+import { evaluateGraphState, rescaleRoadmapToConstraints } from "../lib/utils/graphEngine";
 import {
   Compass,
   Sparkles,
@@ -59,8 +59,11 @@ export default function Home() {
     try {
       const saved = localStorage.getItem("pathcraft_roadmap");
       if (saved) {
-        const parsed = JSON.parse(saved);
+        const parsed: RoadmapData = JSON.parse(saved);
         setRoadmap(parsed);
+        if (parsed.targetRole) setTargetRole(parsed.targetRole);
+        if (parsed.weeklyStudyHours) setWeeklyHours(parsed.weeklyStudyHours);
+        if (parsed.targetDurationMonths) setDurationMonths(parsed.targetDurationMonths);
       }
     } catch (e) {
       console.warn("Could not restore roadmap from localStorage", e);
@@ -143,30 +146,20 @@ export default function Home() {
     }
   };
 
-  // Dynamic Weekly Hours change
+  // Dynamic Weekly Hours change - rescales milestone hours and graph feasibility
   const handleUpdateWeeklyHours = (newHours: number) => {
     if (!roadmap) return;
     setWeeklyHours(newHours);
-    const evaluation = evaluateGraphState(roadmap.nodes, newHours, roadmap.targetDurationMonths);
-    setRoadmap({
-      ...roadmap,
-      weeklyStudyHours: newHours,
-      feasibilityRating: evaluation.feasibilityRating,
-      feasibilityFeedback: evaluation.feasibilityFeedback
-    });
+    const updated = rescaleRoadmapToConstraints(roadmap, newHours, roadmap.targetDurationMonths);
+    setRoadmap(updated);
   };
 
-  // Dynamic Duration Months change
+  // Dynamic Duration Months change - rescales milestone hours and graph feasibility
   const handleUpdateDurationMonths = (newMonths: number) => {
     if (!roadmap) return;
     setDurationMonths(newMonths);
-    const evaluation = evaluateGraphState(roadmap.nodes, roadmap.weeklyStudyHours, newMonths);
-    setRoadmap({
-      ...roadmap,
-      targetDurationMonths: newMonths,
-      feasibilityRating: evaluation.feasibilityRating,
-      feasibilityFeedback: evaluation.feasibilityFeedback
-    });
+    const updated = rescaleRoadmapToConstraints(roadmap, roadmap.weeklyStudyHours, newMonths);
+    setRoadmap(updated);
   };
 
   // Toggle existing skill chip
@@ -285,6 +278,8 @@ export default function Home() {
               onUpdateDurationMonths={handleUpdateDurationMonths}
               onOpenCompare={() => setIsCompareOpen(true)}
               onExportPNG={handleExportJSON}
+              onRegenerateAI={() => handleGenerate()}
+              isRegenerating={loading}
             />
 
             {/* Interactive React Flow Canvas */}
@@ -449,48 +444,125 @@ export default function Home() {
                   type="text"
                   value={targetRole}
                   onChange={(e) => setTargetRole(e.target.value)}
+                  placeholder="e.g. Full Stack Developer at a Climate-Tech Startup"
                   className="mt-1 w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-xs text-white focus:border-cyan-400 focus:outline-none"
                 />
               </div>
 
-              <div>
-                <div className="flex justify-between text-xs text-slate-400">
-                  <span>Weekly Study Hours:</span>
-                  <span className="font-mono text-cyan-300">{weeklyHours}h</span>
+              {/* Weekly Hours */}
+              <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+                <div className="flex justify-between text-xs text-slate-300">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <Clock className="h-3.5 w-3.5 text-cyan-400" />
+                    Weekly Study Hours:
+                  </span>
+                  <span className="font-mono font-bold text-cyan-300">{weeklyHours}h / week</span>
                 </div>
                 <input
                   type="range"
                   min={5}
-                  max={45}
+                  max={50}
                   step={5}
                   value={weeklyHours}
                   onChange={(e) => setWeeklyHours(Number(e.target.value))}
-                  className="mt-1 w-full accent-cyan-400"
+                  className="mt-2 w-full accent-cyan-400 cursor-pointer"
                 />
+                <div className="mt-2 flex gap-1.5">
+                  {[10, 20, 30, 40].map((h) => (
+                    <button
+                      key={h}
+                      type="button"
+                      onClick={() => setWeeklyHours(h)}
+                      className={`flex-1 rounded py-1 text-[11px] font-mono font-medium transition ${
+                        weeklyHours === h
+                          ? "bg-cyan-500/30 border border-cyan-400 text-cyan-200"
+                          : "bg-slate-800/60 border border-slate-700 text-slate-400 hover:text-white"
+                      }`}
+                    >
+                      {h}h
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div>
-                <div className="flex justify-between text-xs text-slate-400">
-                  <span>Target Duration:</span>
-                  <span className="font-mono text-purple-300">{durationMonths} mos</span>
+              {/* Target Duration */}
+              <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+                <div className="flex justify-between text-xs text-slate-300">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    <Calendar className="h-3.5 w-3.5 text-purple-400" />
+                    Target Timeline:
+                  </span>
+                  <span className="font-mono font-bold text-purple-300">{durationMonths} months</span>
                 </div>
                 <input
                   type="range"
-                  min={2}
+                  min={1}
                   max={24}
                   step={1}
                   value={durationMonths}
                   onChange={(e) => setDurationMonths(Number(e.target.value))}
-                  className="mt-1 w-full accent-purple-400"
+                  className="mt-2 w-full accent-purple-400 cursor-pointer"
                 />
+                <div className="mt-2 flex gap-1.5">
+                  {[3, 6, 9, 12].map((m) => (
+                    <button
+                      key={m}
+                      type="button"
+                      onClick={() => setDurationMonths(m)}
+                      className={`flex-1 rounded py-1 text-[11px] font-mono font-medium transition ${
+                        durationMonths === m
+                          ? "bg-purple-500/30 border border-purple-400 text-purple-200"
+                          : "bg-slate-800/60 border border-slate-700 text-slate-400 hover:text-white"
+                      }`}
+                    >
+                      {m}m
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Live Study Capacity Indicator */}
+              <div className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-950/60 px-3 py-2 text-xs">
+                <span className="text-slate-400">Total Study Capacity:</span>
+                <span className="font-mono font-bold text-cyan-300">
+                  ~{Math.round(weeklyHours * 4.33 * durationMonths)} hours
+                </span>
+              </div>
+
+              {/* Existing Skills Selection */}
+              <div>
+                <label className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                  Skills You Already Know:
+                </label>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {COMMON_SKILL_OPTIONS.map((skill, idx) => {
+                    const isSelected = existingSkills.includes(skill);
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => toggleExistingSkill(skill)}
+                        className={`flex items-center gap-1 rounded-md border px-2 py-1 text-[11px] font-medium transition ${
+                          isSelected
+                            ? "border-emerald-500 bg-emerald-950/40 text-emerald-300"
+                            : "border-slate-800 bg-slate-900/60 text-slate-400 hover:border-slate-700 hover:text-slate-200"
+                        }`}
+                      >
+                        {isSelected && <CheckCircle2 className="h-2.5 w-2.5 text-emerald-400" />}
+                        {skill}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               <button
                 type="submit"
-                disabled={loading}
-                className="w-full rounded-xl bg-cyan-600 py-2.5 text-xs font-bold text-white hover:bg-cyan-500 disabled:opacity-50"
+                disabled={loading || !targetRole.trim()}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-600 via-cyan-500 to-blue-600 py-3 text-xs font-bold text-white shadow-lg shadow-cyan-950/50 hover:from-cyan-500 hover:to-blue-500 disabled:opacity-50 transition"
               >
-                {loading ? "Generating..." : "Generate Roadmap"}
+                <Brain className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
+                {loading ? (loadingMessage || "Generating...") : "Generate Reverse-Engineered Roadmap"}
               </button>
             </form>
           </div>

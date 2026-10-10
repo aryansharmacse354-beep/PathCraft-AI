@@ -13,6 +13,7 @@ import {
   MILESTONE_GUIDANCE_SYSTEM_PROMPT,
   PATH_COMPARISON_SYSTEM_PROMPT
 } from "./prompts";
+import { rescaleRoadmapToConstraints } from "../utils/graphEngine";
 
 /**
  * Clean and parse JSON from LLM response (strips markdown code blocks if present)
@@ -57,11 +58,16 @@ async function callGemini(apiKey: string, prompt: string, systemInstruction?: st
         };
       }
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 9000);
+
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        signal: controller.signal
       });
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -540,8 +546,18 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
     });
   });
 
+  // Dynamically scale node estimatedHours to realistically match user's study capacity
+  const availableHours = Math.round(weeklyHours * 4.33 * targetDurationMonths);
+  const baselineSum = nodes.reduce((acc, curr) => acc + curr.estimatedHours, 0) || 185;
+  const targetTotal = Math.max(30, Math.min(800, Math.round(availableHours * 0.95)));
+  const scaleRatio = targetTotal / baselineSum;
+
+  nodes = nodes.map(node => ({
+    ...node,
+    estimatedHours: Math.max(4, Math.round(node.estimatedHours * scaleRatio))
+  }));
+
   const totalEstimatedHours = nodes.reduce((acc, curr) => acc + curr.estimatedHours, 0);
-  const availableHours = weeklyHours * 4.33 * targetDurationMonths;
 
   let feasibilityRating: "Comfortable" | "Realistic" | "Aggressive" | "Unrealistic" = "Realistic";
   let feasibilityFeedback = "";
@@ -624,7 +640,15 @@ Ensure the response strictly complies with the RoadmapSchema JSON format.
       const parsed = cleanAndParseJSON(rawText);
       const validated = RoadmapSchema.safeParse(parsed);
       if (validated.success) {
-        return validated.data;
+        return rescaleRoadmapToConstraints(
+          {
+            ...validated.data,
+            weeklyStudyHours: input.weeklyHours,
+            targetDurationMonths: input.targetDurationMonths
+          },
+          input.weeklyHours,
+          input.targetDurationMonths
+        );
       }
       console.warn("Gemini output schema validation failed, falling back to smart engine:", validated.error);
     } catch (err) {
@@ -645,7 +669,15 @@ Ensure the response strictly complies with the RoadmapSchema JSON format.
       const parsed = cleanAndParseJSON(rawText);
       const validated = RoadmapSchema.safeParse(parsed);
       if (validated.success) {
-        return validated.data;
+        return rescaleRoadmapToConstraints(
+          {
+            ...validated.data,
+            weeklyStudyHours: input.weeklyHours,
+            targetDurationMonths: input.targetDurationMonths
+          },
+          input.weeklyHours,
+          input.targetDurationMonths
+        );
       }
     } catch (err) {
       console.warn("OpenAI call failed, attempting fallback:", err);
@@ -665,7 +697,15 @@ Ensure the response strictly complies with the RoadmapSchema JSON format.
       const parsed = cleanAndParseJSON(rawText);
       const validated = RoadmapSchema.safeParse(parsed);
       if (validated.success) {
-        return validated.data;
+        return rescaleRoadmapToConstraints(
+          {
+            ...validated.data,
+            weeklyStudyHours: input.weeklyHours,
+            targetDurationMonths: input.targetDurationMonths
+          },
+          input.weeklyHours,
+          input.targetDurationMonths
+        );
       }
     } catch (err) {
       console.warn("Groq call failed, attempting fallback:", err);

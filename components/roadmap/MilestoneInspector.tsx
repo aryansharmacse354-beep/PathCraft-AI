@@ -38,7 +38,20 @@ export function MilestoneInspector({
   const [guidance, setGuidance] = useState<MilestoneGuidance | null>(null);
   const [expandedInterviewIdx, setExpandedInterviewIdx] = useState<number | null>(0);
 
+  // Reset guidance when selected milestone changes
+  React.useEffect(() => {
+    setGuidance(null);
+  }, [milestone?.id]);
+
   if (!milestone) return null;
+
+  const getGithubUrl = (repo: string) => {
+    const clean = repo.trim().replace(/^https?:\/\/github\.com\//, "");
+    if (clean.includes("/") && !clean.includes(" ")) {
+      return `https://github.com/${clean}`;
+    }
+    return `https://github.com/search?q=${encodeURIComponent(repo)}&type=repositories`;
+  };
 
   const handleComplete = () => {
     onUpdateStatus(milestone.id, "completed");
@@ -201,18 +214,31 @@ export function MilestoneInspector({
           </p>
           <div className="mt-3 border-t border-purple-500/20 pt-2.5">
             <span className="text-[11px] font-semibold text-purple-400">
-              Suggested Open-Source Templates:
+              Suggested Open-Source Blueprints & Repositories:
             </span>
-            <ul className="mt-1 space-y-1">
-              {milestone.actionableDetails.githubRepoSuggestions.map((repo, idx) => (
-                <li key={idx} className="flex items-center gap-1.5 text-xs text-slate-300">
-                  <ExternalLink className="h-3 w-3 text-purple-400" />
-                  <code className="text-purple-200 bg-purple-950/60 px-1 py-0.5 rounded text-[11px]">
-                    {repo}
-                  </code>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-2 space-y-1.5">
+              {milestone.actionableDetails.githubRepoSuggestions.map((repo, idx) => {
+                const href = getGithubUrl(repo);
+                return (
+                  <a
+                    key={idx}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between rounded-lg border border-purple-500/30 bg-purple-950/40 px-3 py-2 text-xs text-purple-200 hover:border-purple-400 hover:bg-purple-900/60 hover:text-white transition"
+                    title={`Open ${repo} on GitHub`}
+                  >
+                    <div className="flex items-center gap-2 overflow-hidden">
+                      <FolderGit2 className="h-3.5 w-3.5 text-purple-400 group-hover:text-purple-300 flex-shrink-0" />
+                      <span className="font-mono text-[11px] font-medium truncate">
+                        {repo}
+                      </span>
+                    </div>
+                    <ExternalLink className="h-3.5 w-3.5 text-purple-400 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-2" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </div>
 

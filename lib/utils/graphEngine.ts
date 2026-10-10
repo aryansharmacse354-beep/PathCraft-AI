@@ -125,3 +125,44 @@ export function replanRoadmap(
     nodes: evaluation.updatedNodes
   };
 }
+
+/**
+ * Dynamically re-scales milestone estimated hours and redistributes timeline
+ * when the user changes weekly study hours or target duration months.
+ */
+export function rescaleRoadmapToConstraints(
+  roadmap: RoadmapData,
+  newWeeklyHours: number,
+  newDurationMonths: number
+): RoadmapData {
+  const availableHours = Math.round(newWeeklyHours * 4.33 * newDurationMonths);
+  const targetTotal = Math.max(30, Math.min(800, Math.round(availableHours * 0.95)));
+
+  // Calculate current baseline total
+  const currentTotal = roadmap.nodes.reduce((acc, n) => acc + n.estimatedHours, 0) || 1;
+  const scale = targetTotal / currentTotal;
+
+  // Proportionally scale node hours for active learning milestones
+  const rescaledNodes = roadmap.nodes.map((n) => {
+    // Keep completed or known status untouched
+    const scaledHours = Math.max(4, Math.round(n.estimatedHours * scale));
+    return {
+      ...n,
+      estimatedHours: scaledHours
+    };
+  });
+
+  const evaluation = evaluateGraphState(rescaledNodes, newWeeklyHours, newDurationMonths);
+  const totalHours = rescaledNodes.reduce((acc, n) => acc + n.estimatedHours, 0);
+
+  return {
+    ...roadmap,
+    weeklyStudyHours: newWeeklyHours,
+    targetDurationMonths: newDurationMonths,
+    totalEstimatedHours: totalHours,
+    feasibilityRating: evaluation.feasibilityRating,
+    feasibilityFeedback: evaluation.feasibilityFeedback,
+    nodes: evaluation.updatedNodes
+  };
+}
+

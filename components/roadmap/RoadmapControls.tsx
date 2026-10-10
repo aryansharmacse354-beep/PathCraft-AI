@@ -26,6 +26,8 @@ interface RoadmapControlsProps {
   onUpdateDurationMonths: (months: number) => void;
   onOpenCompare: () => void;
   onExportPNG: () => void;
+  onRegenerateAI?: () => void;
+  isRegenerating?: boolean;
 }
 
 export function RoadmapControls({
@@ -40,7 +42,9 @@ export function RoadmapControls({
   onUpdateWeeklyHours,
   onUpdateDurationMonths,
   onOpenCompare,
-  onExportPNG
+  onExportPNG,
+  onRegenerateAI,
+  isRegenerating
 }: RoadmapControlsProps) {
   const getFeasibilityBadge = () => {
     switch (feasibilityRating) {
@@ -94,9 +98,9 @@ export function RoadmapControls({
         </div>
 
         {/* Dynamic Constraint Sliders */}
-        <div className="flex flex-wrap items-center gap-6">
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6">
           {/* Study Hours Slider */}
-          <div className="w-40">
+          <div className="w-36 sm:w-40">
             <div className="flex items-center justify-between text-xs">
               <span className="flex items-center gap-1 text-slate-400">
                 <Clock className="h-3 w-3 text-cyan-400" />
@@ -116,7 +120,7 @@ export function RoadmapControls({
           </div>
 
           {/* Duration Months Slider */}
-          <div className="w-40">
+          <div className="w-36 sm:w-40">
             <div className="flex items-center justify-between text-xs">
               <span className="flex items-center gap-1 text-slate-400">
                 <Calendar className="h-3 w-3 text-purple-400" />
@@ -135,8 +139,26 @@ export function RoadmapControls({
             />
           </div>
 
+          {/* Total Capacity Pill */}
+          <div className="hidden lg:flex flex-col justify-center border-l border-slate-800 pl-4 text-xs">
+            <span className="text-[10px] uppercase font-semibold text-slate-500">Total Capacity</span>
+            <span className="font-mono font-bold text-cyan-300">~{Math.round(weeklyHours * 4.33 * durationMonths)}h</span>
+          </div>
+
           {/* Action Buttons */}
           <div className="flex items-center gap-2">
+            {onRegenerateAI && (
+              <button
+                onClick={onRegenerateAI}
+                disabled={isRegenerating}
+                className="flex items-center gap-1.5 rounded-lg border border-cyan-500/40 bg-gradient-to-r from-cyan-950/60 to-slate-900 px-3 py-2 text-xs font-semibold text-cyan-300 hover:border-cyan-400 hover:bg-cyan-900/60 hover:text-white transition disabled:opacity-50 shadow-sm"
+                title="Re-generate and optimize AI roadmap for newly selected weekly hours and duration"
+              >
+                <Sparkles className={`h-3.5 w-3.5 text-cyan-400 ${isRegenerating ? "animate-spin" : ""}`} />
+                {isRegenerating ? "Re-engineering..." : "Re-engineer Plan"}
+              </button>
+            )}
+
             <button
               onClick={onOpenCompare}
               className="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-2 text-xs font-medium text-slate-200 hover:border-slate-600 hover:bg-slate-700 hover:text-white transition"
