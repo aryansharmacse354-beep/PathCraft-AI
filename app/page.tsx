@@ -60,6 +60,7 @@ export default function Home() {
   const [selectedMilestone, setSelectedMilestone] = useState<Milestone | null>(null);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
   const [showConfigDrawer, setShowConfigDrawer] = useState(false);
+  const [viewMode, setViewMode] = useState<"landing" | "graph">("landing");
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -118,6 +119,7 @@ export default function Home() {
 
       const data: RoadmapData = await res.json();
       setRoadmap(data);
+      setViewMode("graph");
       setShowConfigDrawer(false);
     } catch (err) {
       console.error("Error generating roadmap:", err);
@@ -206,13 +208,17 @@ export default function Home() {
     <div className="flex h-screen flex-col bg-[#0B0F19] text-slate-100 overflow-hidden">
       {/* Top Navigation Bar */}
       <header className="flex h-16 flex-shrink-0 items-center justify-between border-b border-slate-800 bg-[#0F172A]/80 px-6 backdrop-blur-md">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-cyan-600 to-cyan-400 text-slate-950 shadow-[0_0_15px_rgba(6,182,212,0.4)]">
+        <div
+          onClick={() => setViewMode("landing")}
+          className="flex items-center gap-3 cursor-pointer group"
+          title="Return to Home / Career Generator"
+        >
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-cyan-600 to-cyan-400 text-slate-950 shadow-[0_0_15px_rgba(6,182,212,0.4)] group-hover:scale-105 transition">
             <Compass className="h-5 w-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-base font-extrabold tracking-tight text-white">
+              <span className="text-base font-extrabold tracking-tight text-white group-hover:text-cyan-300 transition">
                 PathCraft <span className="text-cyan-400">AI</span>
               </span>
               <span className="rounded-full border border-cyan-500/30 bg-cyan-950/40 px-2 py-0.5 text-[10px] font-semibold text-cyan-300">
@@ -239,6 +245,24 @@ export default function Home() {
         <div className="flex items-center gap-2.5">
           {roadmap && (
             <>
+              {viewMode === "landing" ? (
+                <button
+                  onClick={() => setViewMode("graph")}
+                  className="flex items-center gap-1.5 rounded-lg border border-cyan-500/40 bg-cyan-950/40 px-3 py-1.5 text-xs font-semibold text-cyan-300 hover:border-cyan-400 hover:bg-cyan-900/60 hover:text-white transition"
+                >
+                  <Layers className="h-3.5 w-3.5 text-cyan-400" />
+                  View Active Roadmap
+                </button>
+              ) : (
+                <button
+                  onClick={() => setViewMode("landing")}
+                  className="flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-slate-600 hover:text-white transition"
+                >
+                  <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+                  New Career / Home
+                </button>
+              )}
+
               <button
                 onClick={() => setIsCompareOpen(true)}
                 className="hidden sm:flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-slate-600 hover:text-white transition"
@@ -257,19 +281,22 @@ export default function Home() {
             </>
           )}
 
-          <button
-            onClick={() => setShowConfigDrawer(!showConfigDrawer)}
-            className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-cyan-600 to-cyan-500 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md hover:from-cyan-500 hover:to-cyan-400 transition"
-          >
-            <Sparkles className="h-3.5 w-3.5" />
-            {roadmap ? "New Roadmap" : "Create Roadmap"}
-          </button>
+          {!roadmap && (
+            <button
+              onClick={() => handleGenerate()}
+              disabled={loading}
+              className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-cyan-600 to-cyan-500 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md hover:from-cyan-500 hover:to-cyan-400 transition"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              Create Roadmap
+            </button>
+          )}
         </div>
       </header>
 
       {/* Main Workspace Area */}
       <main className="relative flex flex-1 flex-col overflow-hidden p-4">
-        {roadmap ? (
+        {roadmap && viewMode === "graph" ? (
           <div className="flex h-full flex-col gap-3">
             {/* Controls & Constraint Bar */}
             <RoadmapControls
@@ -298,9 +325,35 @@ export default function Home() {
             </div>
           </div>
         ) : (
-          /* Empty / Onboarding State */
-          <div className="flex flex-1 items-center justify-center p-6">
+          /* First Interface / Onboarding & Career Customization State */
+          <div className="flex flex-1 items-center justify-center p-6 overflow-y-auto">
             <div className="w-full max-w-2xl rounded-2xl border border-slate-800 bg-[#0F172A]/90 p-8 shadow-2xl backdrop-blur-xl">
+              {/* Active Roadmap Quick-Resume Banner if available */}
+              {roadmap && (
+                <div className="mb-6 flex items-center justify-between rounded-xl border border-cyan-500/30 bg-cyan-950/40 p-3.5 backdrop-blur-md">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500/20 text-cyan-300">
+                      <Sparkles className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-semibold text-white">
+                        Active Roadmap: <span className="text-cyan-300">{roadmap.targetRole}</span>
+                      </div>
+                      <div className="text-[11px] text-slate-400">
+                        {graphStats.completedCount} of {graphStats.totalCount} milestones completed ({graphStats.progressPercentage}%)
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setViewMode("graph")}
+                    className="flex items-center gap-1.5 rounded-lg bg-cyan-500 px-3 py-1.5 text-xs font-semibold text-slate-950 hover:bg-cyan-400 transition"
+                  >
+                    Resume Roadmap
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              )}
+
               <div className="text-center">
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-950/60 border border-cyan-500/40 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
                   <Compass className="h-7 w-7" />
