@@ -17,6 +17,21 @@ export const MilestoneStatusSchema = z.enum([
 ]);
 export type MilestoneStatus = z.infer<typeof MilestoneStatusSchema>;
 
+export const LearningResourceTypeSchema = z.enum([
+  "Official Standards & Regulators",
+  "Accredited Course & Curriculum",
+  "Interactive Practice & Tools",
+  "Textbook & Research Papers"
+]);
+export type LearningResourceType = z.infer<typeof LearningResourceTypeSchema>;
+
+export const LearningResourceSchema = z.object({
+  title: z.string().describe("Clear descriptive title of the resource or portal"),
+  url: z.string().url().describe("Direct verified HTTPS link to the official or educational website"),
+  type: LearningResourceTypeSchema.default("Official Standards & Regulators")
+});
+export type LearningResource = z.infer<typeof LearningResourceSchema>;
+
 export const MilestoneSchema = z.object({
   id: z.string().describe("Unique identifier, e.g. 'foundations-typescript'"),
   title: z.string().describe("Clear, concise name of the milestone"),
@@ -31,7 +46,8 @@ export const MilestoneSchema = z.object({
     miniProjectIdea: z.string().describe("Portfolio mini-project to build"),
     githubRepoSuggestions: z.array(z.string()).describe("Open-source blueprints or templates to reference"),
     interviewQuestions: z.array(z.string()).min(1).describe("Realistic interview questions"),
-    keySkillsToMaster: z.array(z.string()).min(1).describe("Specific tools, libraries, or concepts")
+    keySkillsToMaster: z.array(z.string()).min(1).describe("Specific tools, libraries, or concepts"),
+    learningResources: z.array(LearningResourceSchema).optional()
   })
 });
 export type Milestone = z.infer<typeof MilestoneSchema>;

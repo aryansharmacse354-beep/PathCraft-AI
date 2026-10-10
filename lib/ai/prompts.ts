@@ -44,6 +44,7 @@ For each milestone provide:
 - githubRepoSuggestions: 2-3 open-source blueprint repositories, template kits, reference frameworks, or public repositories on GitHub (e.g., clinical guidelines, legal template repositories, financial modeling sheets, lesson plan archives, or code repositories where applicable).
 - interviewQuestions: 2-3 realistic domain-specific interview questions, oral examination prompts, or scenario defense questions.
 - keySkillsToMaster: 3-5 specific tools, standards, techniques, or competencies.
+- learningResources: 2-4 authentic, direct HTTPS links to official websites (such as regulatory bodies, national standards boards, licensing commissions, professional associations like WHO, CDC, ABA, CFA Institute, IEEE, ASCE, ASME, AIGA, OSHA, FDA) AND accredited learning platforms (such as Khan Academy, MIT OpenCourseWare, Coursera, edX, Harvard Online, Stanford Online, Investopedia, MDN Web Docs, PubMed, Cornell Law LII). Format each item as: { "title": string, "url": "https://...", "type": "Official Standards & Regulators" | "Accredited Course & Curriculum" | "Interactive Practice & Tools" | "Textbook & Research Papers" }. Never produce placeholder or broken URLs; always use real, established domains.
 
 6. REALISTIC TIME ESTIMATION & FEASIBILITY:
 - Each node must have realistic estimatedHours based on depth and practice requirements.

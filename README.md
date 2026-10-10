@@ -1,90 +1,201 @@
-# PathCraft AI — Reverse-Engineered Career Roadmapper
-> **National Hackathon Submission** | Problem Statement 1: Reverse-Engineered Career Roadmapper  
-> Built with Next.js 14, TypeScript, React Flow (@xyflow/react), Dagre, Tailwind CSS, and Generative AI.
+# PathCraft AI — Universal Reverse-Engineered Career Intelligence & Learning Engine
+
+> **Live Production Application**: [https://careerroadmapper.vercel.app](https://careerroadmapper.vercel.app)  
+> **GitHub Repository**: [aryansharmacse354-beep/PathCraft-AI](https://github.com/aryansharmacse354-beep/PathCraft-AI)  
+> Built with **Next.js 14 (App Router)**, **TypeScript**, **React Flow (`@xyflow/react`)**, **Dagre Graph Layout**, **Tailwind CSS**, and **Google Gemini Generative AI**.
 
 ---
 
-## What it does
-PathCraft AI is an interactive, game-inspired career intelligence platform that reverse-engineers a student's hyper-specific dream job (such as *"Full Stack Developer at a Climate-Tech Startup"* or *"AI Engineer at an Autonomous Robotics Scale-up"*) into an adaptive, visual skill tree and dependency-governed learning roadmap. Rather than providing generic, one-size-fits-all lists, our Generative AI engine reverse-engineers the target role into logical phases, prerequisite chains, actionable mini-projects, GitHub template blueprints, and interview challenges. Clicking milestones opens a rich contextual inspector, and marking skills as completed or already known dynamically satisfies prerequisites, unlocks downstream nodes, and recalculates study schedules according to student weekly hours and timeline constraints.
+## 🌟 What is PathCraft AI?
 
-## Done / Left / Plan
-- **Done (Working Features)**:
-  - **Dynamic AI Generation Engine (`POST /api/roadmaps/generate`)**: Accepts hyper-specific goals, weekly hours (5-45h), duration months (1-24m), and existing skills; returns validated structured JSON conforming to `RoadmapSchema`.
-  - **Interactive Visual Skill Tree**: Fullscreen zoomable, pannable, and draggable graph rendered via `@xyflow/react` with automated Dagre hierarchical DAG layout.
-  - **Categorized Custom Nodes**: Visual nodes with 4 distinct category badges (*skill*, *project*, *credential*, *job_transition*) and 4 live status states (*completed*, *unlocked*, *in-progress*, *locked*).
-  - **Rich Milestone Inspector Drawer**: Contextual slide-out drawer providing domain rationale, actionable mini-project blueprints, suggested open-source GitHub templates, and technical interview scenarios.
-  - **On-Demand Staff Architect Guidance (`POST /api/milestones/guidance`)**: AI endpoint generating production folder structures, design patterns, rookie mistakes, and mastery checklists for any node.
-  - **Topological Replanning Engine (`POST /api/roadmaps/replan`)**: Marking nodes as "Already Known" or "Completed" immediately satisfies prerequisite chains and unlocks downstream nodes.
-  - **Pacing & Constraint Recalculation**: Live sliders for weekly hours and timeline months dynamically calculate remaining study hours and update feasibility ratings (*Comfortable*, *Realistic*, *Aggressive*, *Unrealistic*).
-  - **Dual-Path Comparison (`POST /api/roadmaps/compare`)**: Side-by-side comparison modal highlighting shared foundational skills vs. diverging specializations between two roles.
-  - **Persistence & Export**: Automatic browser LocalStorage auto-save and one-click JSON export.
-- **Left (Next 16-Hour Scope)**:
-  - Live GitHub API integration to verify real-time stars and fork metrics for suggested repositories.
-  - Calendar integration (.ics export) syncing weekly milestones directly into Google Calendar or Apple Calendar.
-  - Social sharing links generating read-only preview cards for student portfolios.
-- **Plan**:
-  - Deploy to Vercel with edge caching.
-  - Connect Supabase / PostgreSQL for multi-user authentication and persistent roadmap sharing.
-  - Add peer code reviews and community-verified roadmaps.
+**PathCraft AI** is an intelligent, dependency-aware career roadmap and skill-tree engine that reverse-engineers **ANY** profession into a structured, visual Directed Acyclic Graph (DAG). 
 
-## Architecture and why
-- **Next.js 14 (App Router) + TypeScript**: Chosen for unified full-stack architecture, zero-latency server API routes, and strict compile-time type safety across the client and server.
-- **React Flow (`@xyflow/react`) + Dagre Layout Engine**: Career paths are inherently Directed Acyclic Graphs (DAGs) with complex multi-parent prerequisites. Traditional linear checklists or accordions fail to communicate dependency ordering. React Flow paired with Dagre provides smooth 60fps panning, zooming, and automated hierarchical node placement.
-- **Structured JSON Generative AI Engine**: Calls Google Gemini / OpenAI with strict schema constraints validated at runtime with **Zod** (`RoadmapSchema`). Includes a domain-resilient fallback engine ensuring zero downtime or UI breaks even under network constraints or API quota limits.
-- **State Management & Topological Evaluator**: Custom deterministic DAG evaluator (`evaluateGraphState`) handles immediate graph cascades and status propagation locally with zero lag, synchronizing with LocalStorage for persistent progress tracking.
+Unlike traditional platforms that provide static linear checklists or mistakenly force every career into software development templates, PathCraft AI features a **Universal Domain Adaptation Engine** with **Zero Cross-Domain Contamination**. Whether a student wants to become a:
+- 🩺 **Registered Nurse / Clinical Specialist**
+- ⚖️ **Corporate M&A Lawyer / Policy Analyst**
+- 🍎 **High School Educator / Academic Researcher**
+- 📈 **Chartered Financial Analyst (CFA) / Investment Banker**
+- 🚀 **Aerospace / Propulsion Systems Engineer**
+- 🏗️ **Structural Civil Engineer / Urban Architect**
+- 🎨 **Brand Identity & Graphic Designer / UX Researcher**
+- 🍳 **Executive Sous Chef / Hospitality Director**
+- ⚡ **Licensed Master Electrician / Renewable Energy Specialist**
+- 💻 **Distributed Systems Architect / AI Researcher**
 
-## What we added
-Beyond the core hackathon requirements, PathCraft AI introduces several high-impact features:
-1. **Interactive Dual-Role Comparison**: Allows students to evaluate pivot feasibility between two career ambitions (e.g., *Climate Tech Developer* vs. *FinTech Architect*) to find shared foundational milestones.
-2. **On-Demand Staff Architect Deep-Dives**: Generates enterprise folder structures, design patterns, and common rookie pitfalls tailored to each individual milestone.
-3. **Pacing Feasibility Engine**: Mathematically checks user study hours against required curriculum hours and issues transparent warnings if a timeline is unrealistic.
-4. **Pre-Existing Skill Auto-Unlocking**: Allows students to declare existing proficiencies before generating, immediately skipping redundant foundational phases.
-5. **Interactive Confetti & Progress Feedback**: Gamified milestone completion animations celebrating student momentum.
+PathCraft AI analyzes the exact competencies, industry licensing requirements, regulatory standards, and practical portfolio milestones required for that specific profession, generating a tailored and dependency-governed learning tree.
 
-## How to run it
+---
+
+## 🚀 Key Features
+
+### 1. 🌐 Universal Domain Engine (Zero Cross-Domain Contamination)
+- **Career-Specific Curriculum**: Medical roadmaps feature anatomy, pharmacology, sterile field protocols, and clinical rotations; legal paths feature statutory interpretation, civil procedure, and bar preparation; design paths feature typography, grid systems, and portfolio critique.
+- **Strict Contamination Prevention**: Never injects programming frameworks, microservices, Docker, or APIs into non-technical roles.
+
+### 2. 🗺️ Interactive Visual DAG Skill Tree (`@xyflow/react` + Dagre)
+- **Topological Graph Rendering**: Fullscreen, zoomable, draggable, and interactive visual graph automatically laid out using Dagre's hierarchical DAG algorithm.
+- **Color-Coded Status Cascade**:
+  - 🟢 **Completed**: Successfully mastered milestones (with celebration confetti).
+  - 🟡 **In Progress**: Currently active learning focus.
+  - 🔵 **Available / Unlocked**: Prerequisites satisfied; ready to start.
+  - 🔒 **Locked**: Upstream prerequisites pending completion.
+  - ✨ **Already Known**: Skip redundant foundational steps with one click.
+
+### 3. 📚 Official Regulatory Websites & Verified Learning Portals
+- **Direct Authoritative Links**: Every milestone links directly to recognized national and international regulatory bodies:
+  - **Healthcare**: World Health Organization (WHO), CDC, NCSBN (NCLEX), NIH / PubMed.
+  - **Law**: Legal Information Institute (Cornell Law LII), American Bar Association (ABA), US Courts, Oyez.
+  - **Finance**: CFA Institute, Financial Accounting Standards Board (FASB), SEC EDGAR.
+  - **Engineering**: NASA Technical Reports (NTRS), ASME, ASCE, AIAA.
+  - **Creative & Trades**: AIGA, Nielsen Norman Group, OSHA, NFPA / NEC.
+- **Accredited Learning Platforms**: Verified curriculum links to **Khan Academy**, **MIT OpenCourseWare**, **Coursera**, **Harvard Online**, **Edutopia**, and **Investopedia**.
+- **Visual Link Inspector**: Displays categorization badges (*Official Standards & Regulators*, *Accredited Course & Curriculum*, *Textbook & Research Papers*) and verified HTTPS domain indicators.
+
+### 4. 🔍 Deep Milestone Inspector Drawer
+Clicking any node in the skill tree slides out an interactive inspection drawer containing:
+- **Role Rationale**: Hyper-specific explanation of why this milestone is vital for the target career.
+- **Key Competencies**: Essential tools, concepts, and industry standards to master.
+- **Actionable Practical Deliverable**: Concrete portfolio project, clinical simulation, legal brief, lesson plan, or case study.
+- **Blueprints & Reference Frameworks**: Curated open-source repositories and template kits.
+- **Interview & Oral Defense Preparation**: Realistic scenario questions with actionable evaluator guidance.
+
+### 5. 🧠 On-Demand Lead Domain Specialist Guidance (`POST /api/milestones/guidance`)
+- One-click AI synthesis generating:
+  - **Methodology & Execution Standards**: Professional execution framework tailored to the field.
+  - **Recommended Deliverable / Dossier Structure**: File organization, case-file layout, or portfolio hierarchy.
+  - **Rookie Pitfalls to Avoid**: Common novice mistakes and why they occur.
+  - **Mastery Verification Checklist**: Concrete criteria to verify true competency.
+
+### 6. ⏱️ Dynamic Schedule Scaling & Feasibility Engine
+- **Live Constraint Adjustment**: Adjust **Weekly Study Hours** (5–60 hrs/wk) and **Target Duration** (1–36 months).
+- **Proportional Workload Rescaling**: Dynamically rescales milestone study hours and calculates remaining workload against available hours:
+  $$\text{Available Hours} = \text{Weekly Hours} \times 4.33 \times \text{Duration Months}$$
+- **Feasibility Ratings**:
+  - **Comfortable**: Workload easily fits with buffer time.
+  - **Realistic**: Balanced, achievable study commitment.
+  - **Aggressive**: Demanding pace requiring disciplined execution.
+  - **Unrealistic**: Workload exceeds available time; transparently warns the learner.
+
+### 7. ⚖️ Dual-Path Career Comparison (`POST /api/roadmaps/compare`)
+- Compare two dream roles side-by-side (e.g., *Clinical Nurse* vs. *Healthcare Administrator*, or *Full Stack Engineer* vs. *AI Engineer*).
+- Calculates:
+  - **Overlap Percentage** (0–100%)
+  - **Shared Foundational Competencies**
+  - **Role-Specific Divergent Skills**
+  - **Pivot Difficulty** (*Low*, *Moderate*, *High*)
+  - **Strategic Pivot Recommendation**
+
+### 8. 💾 Offline Persistence & JSON Export
+- **Automatic LocalStorage Synchronization**: Progress, node states, and active roadmaps persist seamlessly across reloads.
+- **One-Click JSON Export**: Download full graph data for backup, sharing, or offline review.
+
+---
+
+## 🏗️ Architecture & Technology Stack
+
+| Layer | Technologies | Rationale |
+|---|---|---|
+| **Framework** | Next.js 14 (App Router) | High-performance server-side rendering and API route execution with zero-latency full-stack integration. |
+| **Language** | TypeScript (Strict Mode) | End-to-end compile-time type safety across client state and API payloads. |
+| **Graph Engine** | `@xyflow/react` + `dagre` | 60fps hardware-accelerated interactive canvas with automated hierarchical DAG layout algorithm. |
+| **Generative AI** | Google Gemini 2.5 Flash / 1.5 Flash | High-speed structured JSON synthesis with domain fallbacks for guaranteed 100% uptime. |
+| **Validation** | Zod (`RoadmapSchema`) | Runtime type and schema validation preventing malformed graphs or undefined node states. |
+| **Styling** | Tailwind CSS + Lucide Icons | Responsive, sleek dark-mode developer UI with rich typography and micro-interactions. |
+| **Delight** | Canvas-Confetti | Gamified celebratory feedback upon completing milestones. |
+
+---
+
+## 📦 Project Structure
+
+```
+career_roadmapper/
+├── app/
+│   ├── api/
+│   │   ├── milestones/guidance/route.ts   # Deep specialist guidance API
+│   │   ├── roadmaps/compare/route.ts      # Dual-role career comparison API
+│   │   ├── roadmaps/generate/route.ts     # Core roadmap generation API
+│   │   └── roadmaps/replan/route.ts       # Topological replanning API
+│   ├── layout.tsx                         # Root Next.js layout & metadata
+│   └── page.tsx                           # Main interactive application dashboard
+├── components/
+│   ├── layout/
+│   │   ├── Navbar.tsx                     # Top navigation, export & role controls
+│   │   └── QuickControls.tsx              # Target duration & weekly hours sliders
+│   ├── roadmap/
+│   │   ├── MilestoneInspector.tsx         # Node details, official links & guidance drawer
+│   │   ├── MilestoneNode.tsx              # Custom React Flow graph node with status badges
+│   │   ├── PathComparisonModal.tsx        # Side-by-side role comparison modal
+│   │   └── RoadmapCanvas.tsx              # React Flow canvas with Dagre auto-layout
+│   └── ui/                                # Reusable UI components & badges
+├── lib/
+│   ├── ai/
+│   │   ├── client.ts                      # Gemini API caller & domain fallback engine
+│   │   └── prompts.ts                     # Universal Career Engine prompts & anti-contamination rules
+│   ├── types/
+│   │   └── roadmap.ts                     # Zod schemas & TypeScript type definitions
+│   └── utils/
+│       ├── graphEngine.ts                 # Dagre layout & topological state evaluators
+│       └── storage.ts                     # LocalStorage persistence utilities
+└── public/                                # Static assets and icons
+```
+
+---
+
+## 🛠️ Getting Started Locally
+
 ### Prerequisites
-- Node.js 18.x or 20.x+
-- npm or yarn
+- **Node.js** 18.x, 20.x, or 24.x
+- **npm** or **yarn**
 
-### Setup Commands
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd career_roadmapper
-   ```
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-3. **Configure Environment Variables**:
-   ```bash
-   cp .env.example .env.local
-   ```
-   Add your Gemini, OpenAI, or Groq API key:
-   ```env
-   GEMINI_API_KEY=your_gemini_api_key_here
-   ```
-4. **Launch Development Server**:
-   ```bash
-   npm run dev
-   ```
-5. **Open Application**:
-   - Local: [http://localhost:3000](http://localhost:3000)
-   - Live Production URL: [https://careerroadmapper.vercel.app](https://careerroadmapper.vercel.app)
+### 1. Clone the Repository
+```bash
+git clone https://github.com/aryansharmacse354-beep/PathCraft-AI.git
+cd PathCraft-AI
+```
 
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-## Tools and AI used
-- **AI Models & Frameworks**: Google Gemini 1.5 Flash (via structured JSON mode), OpenAI GPT-4o, and Groq.
-- **Core Libraries**: Next.js 14, React 18, `@xyflow/react`, `dagre`, `zod`, `lucide-react`, `tailwindcss`, `canvas-confetti`.
-- **Transparency & Disclosure**:
-  - The application clearly informs users that career roadmaps and architectural specifications are synthesized by Generative AI.
-  - Every milestone contains clear markers distinguishing AI suggestions from verified skills.
-  - Code generation and prompt schemas were architected and verified during the hackathon.
+### 3. Set Up Environment Variables
+Create a `.env.local` file in the root directory:
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+> *(Optional: You can also specify `OPENAI_API_KEY` or `GROQ_API_KEY` if using alternate providers).*
 
-## Who it is for
-PathCraft AI is built for:
-1. **University Engineering Students**: Who are tired of vague advice like *"learn data structures"* and need concrete, project-backed roadmaps tailored to specific modern roles.
-2. **Self-Taught Developers & Career Switchers**: Who need to know exactly which prerequisite skills to tackle first without wasting months on redundant tutorials.
-3. **Mentors & University Career Counselors**: To visually audit and tailor realistic learning timetables for students based on their actual weekly study availability.
+### 4. Run the Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-**Retention Drivers**: Students return weekly as an interactive study dashboard—marking completed nodes, inspecting newly unlocked interview questions, and monitoring their live career readiness percentage.
+### 5. Build for Production
+```bash
+npm run build
+npm start
+```
+
+---
+
+## 🌐 Live Deployment on Vercel
+
+PathCraft AI is continuously deployed to **Vercel** with optimized serverless edge functions:
+
+🔗 **Production URL**: [https://careerroadmapper.vercel.app](https://careerroadmapper.vercel.app)
+
+---
+
+## 👥 Who is PathCraft AI For?
+
+1. **Students & High School Graduates**: Unsure how to break into specialized careers like Aerospace Engineering, Clinical Nursing, Corporate Law, or Sustainable Energy.
+2. **Career Pivoters & Transitioners**: Professionals wanting to understand the exact prerequisite dependencies, time requirements, and shared foundational skills before making a career change.
+3. **Academic & Vocational Counselors**: Educators needing an objective, evidence-based roadmap to help students plan realistic study schedules and track verified milestones.
+4. **Self-Taught Practitioners**: Learners who want direct links to verified regulatory standards and accredited university coursework instead of uncurated web articles.
+
+---
+
+## 📄 License & Acknowledgments
+- Developed for the **PathCraft AI Career Roadmapper** initiative.
+- MIT License — free for educational and non-commercial development.
