@@ -720,11 +720,19 @@ export function MilestoneInspector({
   };
 
   const handleMarkKnown = () => {
-    onUpdateStatus(milestone.id, "known");
+    if (milestone.status === "known") {
+      onUpdateStatus(milestone.id, "available");
+    } else {
+      onUpdateStatus(milestone.id, "known");
+    }
   };
 
   const handleStart = () => {
-    onUpdateStatus(milestone.id, "in_progress");
+    if (milestone.status === "in_progress") {
+      onUpdateStatus(milestone.id, "available");
+    } else {
+      onUpdateStatus(milestone.id, "in_progress");
+    }
   };
 
   const fetchDeepGuidance = async () => {
@@ -761,7 +769,7 @@ export function MilestoneInspector({
           <h2 className="mt-1 text-lg font-bold text-white leading-snug">
             {milestone.title}
           </h2>
-          <div className="mt-2 flex items-center gap-3 text-xs text-slate-400">
+          <div className="mt-2 flex flex-wrap items-center gap-2.5 text-xs text-slate-400">
             <span className="flex items-center gap-1">
               <Clock className="h-3.5 w-3.5 text-cyan-400" />
               {milestone.estimatedHours} hours
@@ -769,6 +777,15 @@ export function MilestoneInspector({
             <span className="rounded bg-slate-800 px-2 py-0.5 text-slate-300 font-medium capitalize">
               {milestone.category}
             </span>
+            {milestone.status === "in_progress" && (
+              <span className="flex items-center gap-1.5 rounded-full border border-amber-500/50 bg-amber-950/60 px-2.5 py-0.5 text-[11px] font-semibold text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.35)]">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-80" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400 shadow-[0_0_6px_#F59E0B]" />
+                </span>
+                Active Learning Light
+              </span>
+            )}
           </div>
         </div>
         <button
@@ -786,7 +803,7 @@ export function MilestoneInspector({
           onClick={handleMarkKnown}
           className={`flex items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-semibold transition ${
             milestone.status === "known"
-              ? "border-emerald-500 bg-emerald-500/20 text-emerald-300"
+              ? "border-emerald-500 bg-emerald-500/20 text-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.3)]"
               : "border-slate-700 bg-slate-800/80 text-slate-300 hover:border-slate-600 hover:bg-slate-700"
           }`}
         >
@@ -798,11 +815,18 @@ export function MilestoneInspector({
           onClick={handleStart}
           className={`flex items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-semibold transition ${
             milestone.status === "in_progress"
-              ? "border-amber-500 bg-amber-500/20 text-amber-300"
+              ? "border-amber-400 bg-amber-500/25 text-amber-200 shadow-[0_0_15px_rgba(245,158,11,0.4)] ring-1 ring-amber-400/50"
               : "border-slate-700 bg-slate-800/80 text-slate-300 hover:border-slate-600 hover:bg-slate-700"
           }`}
         >
-          <PlayCircle className="h-3.5 w-3.5 text-amber-400" />
+          {milestone.status === "in_progress" ? (
+            <span className="relative flex h-2.5 w-2.5 mr-0.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-80" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400 shadow-[0_0_8px_#F59E0B]" />
+            </span>
+          ) : (
+            <PlayCircle className="h-3.5 w-3.5 text-amber-400" />
+          )}
           In Progress
         </button>
 

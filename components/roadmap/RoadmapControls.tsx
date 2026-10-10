@@ -20,6 +20,7 @@ interface RoadmapControlsProps {
   progressPercentage: number;
   completedCount: number;
   totalCount: number;
+  inProgressCount?: number;
   feasibilityRating: "Comfortable" | "Realistic" | "Aggressive" | "Unrealistic";
   feasibilityFeedback: string;
   onUpdateWeeklyHours: (hours: number) => void;
@@ -37,6 +38,7 @@ export function RoadmapControls({
   progressPercentage,
   completedCount,
   totalCount,
+  inProgressCount = 0,
   feasibilityRating,
   feasibilityFeedback,
   onUpdateWeeklyHours,
@@ -192,8 +194,22 @@ export function RoadmapControls({
             Unlocked (Prereqs Met)
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_6px_#F59E0B]" />
-            In Progress
+            <span className="relative flex h-2.5 w-2.5">
+              <span
+                className={`animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-80 ${
+                  inProgressCount > 0 ? "inline-flex" : "hidden"
+                }`}
+              />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400 shadow-[0_0_8px_#F59E0B]" />
+            </span>
+            <span className={inProgressCount > 0 ? "font-semibold text-amber-200" : ""}>
+              In Progress
+              {inProgressCount > 0 && (
+                <span className="ml-1.5 rounded bg-amber-500/20 px-1.5 py-0.2 text-[10px] font-bold text-amber-300 border border-amber-500/40">
+                  {inProgressCount} active
+                </span>
+              )}
+            </span>
           </span>
           <span className="flex items-center gap-1.5">
             <span className="h-2 w-2 rounded-full bg-slate-600" />

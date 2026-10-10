@@ -14,6 +14,7 @@ export function evaluateGraphState(
   progressPercentage: number;
   remainingHours: number;
   completedCount: number;
+  inProgressCount: number;
   feasibilityRating: "Comfortable" | "Realistic" | "Aggressive" | "Unrealistic";
   feasibilityFeedback: string;
 } {
@@ -22,6 +23,7 @@ export function evaluateGraphState(
 
   let remainingHours = 0;
   let completedCount = 0;
+  let inProgressCount = 0;
 
   // Multiple passes to ensure multi-depth cascades unlock properly
   let changed = true;
@@ -30,7 +32,8 @@ export function evaluateGraphState(
   while (changed) {
     changed = false;
     currentNodes = currentNodes.map((node) => {
-      if (node.status === "completed" || node.status === "known") {
+      // Completed, known, and in_progress are user-driven active statuses that must not be automatically overwritten
+      if (node.status === "completed" || node.status === "known" || node.status === "in_progress") {
         return node;
       }
 
@@ -46,7 +49,7 @@ export function evaluateGraphState(
         return { ...node, status: "available" as MilestoneStatus };
       }
 
-      if (!allPrereqsMet && (node.status === "available" || node.status === "in_progress")) {
+      if (!allPrereqsMet && node.status === "available") {
         statusMap.set(node.id, "locked");
         changed = true;
         return { ...node, status: "locked" as MilestoneStatus };
@@ -60,6 +63,9 @@ export function evaluateGraphState(
   currentNodes.forEach((node) => {
     if (node.status === "completed" || node.status === "known") {
       completedCount++;
+    } else if (node.status === "in_progress") {
+      inProgressCount++;
+      remainingHours += node.estimatedHours;
     } else {
       remainingHours += node.estimatedHours;
     }
@@ -90,6 +96,7 @@ export function evaluateGraphState(
     progressPercentage,
     remainingHours,
     completedCount,
+    inProgressCount,
     feasibilityRating,
     feasibilityFeedback
   };

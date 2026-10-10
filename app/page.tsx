@@ -193,12 +193,13 @@ export default function Home() {
   // Calculate current graph stats
   const graphStats = React.useMemo(() => {
     if (!roadmap) {
-      return { completedCount: 0, totalCount: 0, progressPercentage: 0, remainingHours: 0 };
+      return { completedCount: 0, totalCount: 0, inProgressCount: 0, progressPercentage: 0, remainingHours: 0 };
     }
     const evaluation = evaluateGraphState(roadmap.nodes, roadmap.weeklyStudyHours, roadmap.targetDurationMonths);
     return {
       completedCount: evaluation.completedCount,
       totalCount: roadmap.nodes.length,
+      inProgressCount: evaluation.inProgressCount,
       progressPercentage: evaluation.progressPercentage,
       remainingHours: evaluation.remainingHours
     };
@@ -306,6 +307,7 @@ export default function Home() {
               progressPercentage={graphStats.progressPercentage}
               completedCount={graphStats.completedCount}
               totalCount={graphStats.totalCount}
+              inProgressCount={graphStats.inProgressCount}
               feasibilityRating={roadmap.feasibilityRating}
               feasibilityFeedback={roadmap.feasibilityFeedback}
               onUpdateWeeklyHours={handleUpdateWeeklyHours}
@@ -339,8 +341,16 @@ export default function Home() {
                       <div className="text-xs font-semibold text-white">
                         Active Roadmap: <span className="text-cyan-300">{roadmap.targetRole}</span>
                       </div>
-                      <div className="text-[11px] text-slate-400">
-                        {graphStats.completedCount} of {graphStats.totalCount} milestones completed ({graphStats.progressPercentage}%)
+                      <div className="text-[11px] text-slate-400 flex items-center gap-2">
+                        <span>
+                          {graphStats.completedCount} of {graphStats.totalCount} milestones completed ({graphStats.progressPercentage}%)
+                        </span>
+                        {graphStats.inProgressCount > 0 && (
+                          <span className="flex items-center gap-1 rounded bg-amber-500/20 px-1.5 py-0.2 text-[10px] font-semibold text-amber-300 border border-amber-500/30">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-ping" />
+                            {graphStats.inProgressCount} in progress
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>

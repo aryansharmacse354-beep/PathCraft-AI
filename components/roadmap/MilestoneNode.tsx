@@ -57,8 +57,8 @@ export const MilestoneNode = memo(({ data, selected }: NodeProps) => {
         };
       case "in_progress":
         return {
-          container: "border-amber-500 bg-amber-950/30 shadow-[0_0_15px_rgba(245,158,11,0.35)]",
-          badge: "bg-amber-500/20 text-amber-300 border-amber-500/40",
+          container: "border-amber-400 bg-amber-950/40 shadow-[0_0_25px_rgba(245,158,11,0.5)] ring-2 ring-amber-400/50 animate-pulse-slow",
+          badge: "bg-amber-500/25 text-amber-200 border-amber-400/60 shadow-[0_0_10px_rgba(245,158,11,0.3)]",
           icon: PlayCircle,
           iconColor: "text-amber-400",
           statusText: "In Progress"
@@ -92,11 +92,21 @@ export const MilestoneNode = memo(({ data, selected }: NodeProps) => {
         selected ? "ring-2 ring-cyan-400 ring-offset-2 ring-offset-[#0B0F19]" : ""
       }`}
     >
+      {/* Live Active "In Progress" Status Beacon Light */}
+      {milestone.status === "in_progress" && (
+        <div className="absolute -top-1.5 -right-1.5 z-20 flex h-4 w-4 items-center justify-center" title="Actively In Progress">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-80" />
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400 shadow-[0_0_12px_#F59E0B]" />
+        </div>
+      )}
+
       {/* Input Handle */}
       <Handle
         type="target"
         position={Position.Top}
-        className="!h-3 !w-3 !rounded-full !border-2 !border-slate-900 !bg-cyan-400"
+        className={`!h-3 !w-3 !rounded-full !border-2 !border-slate-900 ${
+          milestone.status === "in_progress" ? "!bg-amber-400 shadow-[0_0_8px_#F59E0B]" : "!bg-cyan-400"
+        }`}
       />
 
       {/* Top Meta Bar */}
@@ -118,8 +128,15 @@ export const MilestoneNode = memo(({ data, selected }: NodeProps) => {
 
       {/* Status Badge */}
       <div className="mt-3 flex items-center justify-between pt-1 border-t border-slate-800/60 text-[11px]">
-        <span className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-medium ${statusStyle.badge}`}>
-          <StatusIcon className={`h-3 w-3 ${statusStyle.iconColor}`} />
+        <span className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 font-medium ${statusStyle.badge}`}>
+          {milestone.status === "in_progress" ? (
+            <span className="relative flex h-2 w-2 mr-0.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-80" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400 shadow-[0_0_8px_#F59E0B]" />
+            </span>
+          ) : (
+            <StatusIcon className={`h-3 w-3 ${statusStyle.iconColor}`} />
+          )}
           {statusStyle.statusText}
         </span>
         <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
@@ -131,7 +148,9 @@ export const MilestoneNode = memo(({ data, selected }: NodeProps) => {
       <Handle
         type="source"
         position={Position.Bottom}
-        className="!h-3 !w-3 !rounded-full !border-2 !border-slate-900 !bg-cyan-400"
+        className={`!h-3 !w-3 !rounded-full !border-2 !border-slate-900 ${
+          milestone.status === "in_progress" ? "!bg-amber-400 shadow-[0_0_8px_#F59E0B]" : "!bg-cyan-400"
+        }`}
       />
     </div>
   );

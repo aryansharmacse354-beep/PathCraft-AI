@@ -31,13 +31,19 @@ export function RoadmapCanvas({
 
   // Compute Dagre auto-layout
   const { initialNodes, initialEdges } = useMemo(() => {
-    const rfEdges: Edge[] = roadmap.edges.map((edge) => ({
-      id: edge.id,
-      source: edge.source,
-      target: edge.target,
-      animated: edge.animated ?? true,
-      style: { stroke: "#38bdf8", strokeWidth: 2 }
-    }));
+    const rfEdges: Edge[] = roadmap.edges.map((edge) => {
+      const targetNode = roadmap.nodes.find((n) => n.id === edge.target);
+      const isTargetInProgress = targetNode?.status === "in_progress";
+      return {
+        id: edge.id,
+        source: edge.source,
+        target: edge.target,
+        animated: edge.animated ?? true,
+        style: isTargetInProgress
+          ? { stroke: "#F59E0B", strokeWidth: 2.5, filter: "drop-shadow(0 0 6px rgba(245,158,11,0.6))" }
+          : { stroke: "#38bdf8", strokeWidth: 2 }
+      };
+    });
 
     const layouted = getLayoutedElements(roadmap.nodes, rfEdges, "TB");
     return { initialNodes: layouted.nodes, initialEdges: layouted.edges };
@@ -48,13 +54,19 @@ export function RoadmapCanvas({
 
   // Sync state whenever roadmap updates
   React.useEffect(() => {
-    const rfEdges: Edge[] = roadmap.edges.map((edge) => ({
-      id: edge.id,
-      source: edge.source,
-      target: edge.target,
-      animated: edge.animated ?? true,
-      style: { stroke: "#38bdf8", strokeWidth: 2 }
-    }));
+    const rfEdges: Edge[] = roadmap.edges.map((edge) => {
+      const targetNode = roadmap.nodes.find((n) => n.id === edge.target);
+      const isTargetInProgress = targetNode?.status === "in_progress";
+      return {
+        id: edge.id,
+        source: edge.source,
+        target: edge.target,
+        animated: edge.animated ?? true,
+        style: isTargetInProgress
+          ? { stroke: "#F59E0B", strokeWidth: 2.5, filter: "drop-shadow(0 0 6px rgba(245,158,11,0.6))" }
+          : { stroke: "#38bdf8", strokeWidth: 2 }
+      };
+    });
 
     const layouted = getLayoutedElements(roadmap.nodes, rfEdges, "TB");
     setNodes(layouted.nodes);
