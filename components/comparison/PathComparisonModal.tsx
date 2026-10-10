@@ -23,12 +23,14 @@ interface PathComparisonModalProps {
 }
 
 const PRESET_ROLES = [
-  "Full Stack Developer",
-  "DevOps & Cloud Engineer",
-  "AI & Machine Learning Engineer",
-  "Data Scientist & Analytics",
-  "Cybersecurity Architect",
-  "Mobile App Developer (React Native/iOS)"
+  "Registered Nurse",
+  "Healthcare Administrator",
+  "Corporate M&A Lawyer",
+  "Financial Analyst",
+  "Chartered Accountant (CPA)",
+  "Aerospace Engineer",
+  "Graphic Designer",
+  "AI & ML Engineer"
 ];
 
 export function PathComparisonModal({
@@ -37,15 +39,33 @@ export function PathComparisonModal({
   onClose
 }: PathComparisonModalProps) {
   const [roleA, setRoleA] = useState(currentRole);
-  const [roleB, setRoleB] = useState("DevOps & Cloud Engineer");
+  const [roleB, setRoleB] = useState("Healthcare Administrator");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [comparison, setComparison] = useState<PathComparison | null>(null);
 
-  // Sync roleA when currentRole changes
+  // Sync roleA and smart default for roleB when currentRole changes
   useEffect(() => {
     if (currentRole) {
       setRoleA(currentRole);
+      const lower = currentRole.toLowerCase();
+      if (/health|nurse|doctor|clinic/i.test(lower)) {
+        setRoleB("Healthcare Administrator");
+      } else if (/law|legal|attorney/i.test(lower)) {
+        setRoleB("Compliance Officer & Corporate Counsel");
+      } else if (/finan|account|cfa|cpa/i.test(lower)) {
+        setRoleB("Chartered Accountant (CPA)");
+      } else if (/teach|educat|school/i.test(lower)) {
+        setRoleB("Instructional Designer");
+      } else if (/aero|space|mechanic/i.test(lower)) {
+        setRoleB("Robotics & Automation Engineer");
+      } else if (/design|graphic|art/i.test(lower)) {
+        setRoleB("Product UX Designer");
+      } else if (/chef|culinary|food/i.test(lower)) {
+        setRoleB("Restaurant Operations Manager");
+      } else {
+        setRoleB("AI & Machine Learning Engineer");
+      }
     }
   }, [currentRole]);
 
@@ -131,7 +151,7 @@ export function PathComparisonModal({
               className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-medium text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none"
             />
             <div className="mt-2 flex flex-wrap gap-1">
-              {PRESET_ROLES.slice(0, 3).map((r, i) => (
+              {PRESET_ROLES.slice(0, 4).map((r, i) => (
                 <button
                   key={i}
                   type="button"
@@ -157,7 +177,7 @@ export function PathComparisonModal({
               className="mt-1.5 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs font-medium text-white placeholder-slate-500 focus:border-purple-400 focus:outline-none"
             />
             <div className="mt-2 flex flex-wrap gap-1">
-              {PRESET_ROLES.slice(3, 6).map((r, i) => (
+              {PRESET_ROLES.slice(4, 8).map((r, i) => (
                 <button
                   key={i}
                   type="button"
