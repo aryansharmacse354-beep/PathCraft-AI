@@ -175,7 +175,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Clinicians must interpret subtle vital sign shifts, recognize acute decompensation, and understand disease etiology for ${targetRole}.`,
         actionableDetails: {
           miniProjectIdea: "Compile comprehensive differential diagnosis and pathophysiological mechanism case charts for 5 acute clinical conditions.",
-          githubRepoSuggestions: ["open-clinical/guidelines", "hl7/fhir-patient-records"],
+          githubRepoSuggestions: ["synthetichealth/synthea", "openemr/openemr"],
           interviewQuestions: [
             "How do you differentiate respiratory from metabolic acidosis using arterial blood gas (ABG) values?",
             "Describe the clinical intervention cascade when assessing a patient presenting with early septic shock."
@@ -195,7 +195,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Safe clinical delivery demands strict adherence to legal boundaries, patient dignity, and infection prevention protocols.`,
         actionableDetails: {
           miniProjectIdea: "Audit and construct an infection control and patient safety checklist conforming to WHO and Joint Commission standards.",
-          githubRepoSuggestions: ["who/patient-safety-curriculum", "clinical-ethics/handbook"],
+          githubRepoSuggestions: ["smart-on-fhir/client-js", "openemr/openemr"],
           interviewQuestions: [
             "How do you handle confidential medical disclosures when requested by insistent family members?",
             "What specific protocol do you initiate upon identifying a potential near-miss medication error?"
@@ -215,7 +215,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Medication administration carries immediate patient safety consequences and requires flawless calculation and pharmacological knowledge.`,
         actionableDetails: {
           miniProjectIdea: "Develop a high-alert drug reference monograph covering therapeutic windows, contraindications, and reversal agents.",
-          githubRepoSuggestions: ["clinical-pharmacology/rx-references", "openfda/drug-interactions"],
+          githubRepoSuggestions: ["FDA/openfda", "openemr/openemr"],
           interviewQuestions: [
             "What are your vital sign checks and contraindications prior to administering IV cardiac medications?",
             "How do you calculate pediatric weight-based emergency medication dosages under time pressure?"
@@ -235,7 +235,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Bridges theoretical biomedical knowledge into tactile clinical precision before entering live patient environments.`,
         actionableDetails: {
           miniProjectIdea: "Complete high-fidelity clinical simulation scenarios covering rapid response activation, telemetry monitoring, and code cart execution.",
-          githubRepoSuggestions: ["nursing-simulations/scenario-guides", "resuscitation/cpr-protocols"],
+          githubRepoSuggestions: ["synthetichealth/synthea", "openemr/openemr"],
           interviewQuestions: [
             "Walk me through your step-by-step actions during a sudden code blue or rapid response activation.",
             "How do you establish therapeutic communication with an agitated, disoriented patient?"
@@ -255,7 +255,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `The definitive proof of bedside competence and interdisciplinary teamwork required by healthcare employers.`,
         actionableDetails: {
           miniProjectIdea: "Maintain an evidence-based clinical case logbook documenting 100+ patient encounters with SBAR handover notes.",
-          githubRepoSuggestions: ["clinical-placements/logbook-templates", "nursing-council/competency-framework"],
+          githubRepoSuggestions: ["openemr/openemr", "smart-on-fhir/client-js"],
           interviewQuestions: [
             "Tell me about a complex patient case where your clinical advocacy altered the physician's care plan.",
             "How do you prioritize competing urgent orders across a multi-patient acuity assignment?"
@@ -275,7 +275,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Secures official legal authorization to practice and positions you for premier clinical healthcare appointments.`,
         actionableDetails: {
           miniProjectIdea: "Complete comprehensive board practice sets and conduct simulated clinical panel interviews with peer evaluators.",
-          githubRepoSuggestions: ["nclex-prep/study-blueprints", "clinical-interviews/behavioral-scenarios"],
+          githubRepoSuggestions: ["https://github.com/topics/healthcare", "openemr/openemr"],
           interviewQuestions: [
             "How do you manage emotional resilience and physical stamina after an unexpected patient loss?",
             "Describe a clinical near-miss you encountered and the corrective process you implemented."
@@ -306,7 +306,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Legal reasoning forms the bedrock of analyzing claims, advising clients, and constructing enforceable arguments in ${targetRole}.`,
         actionableDetails: {
           miniProjectIdea: "Draft comparative case briefs analyzing landmark Supreme Court and appellate holdings on procedural due process.",
-          githubRepoSuggestions: ["legal-tech/open-legal-data", "case-law/brief-templates"],
+          githubRepoSuggestions: ["freelawproject/courtlistener", "freelawproject/recap"],
           interviewQuestions: [
             "How do you resolve conflicts between statutory text and legislative intent under modern judicial canons?",
             "Explain proximate cause and the foreseeability test in complex tort claims."
@@ -326,7 +326,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Attorneys and legal professionals must locate on-point controlling authority with zero tolerance for citational error.`,
         actionableDetails: {
           miniProjectIdea: "Produce a 10-page formal research memorandum addressing an emerging jurisdictional dispute with Bluebook citations.",
-          githubRepoSuggestions: ["harvard-lil/cap-examples", "legal-citations/bluebook-guides"],
+          githubRepoSuggestions: ["harvard-lil/cap-examples", "freelawproject/courtlistener"],
           interviewQuestions: [
             "How do you confirm that an authority has not been distinguished, overruled, or abrogated by later precedent?",
             "What strategies do you employ when researching a novel legal issue with no direct controlling case law in your circuit?"
@@ -346,7 +346,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Demonstrates the ability to distill multi-volume evidentiary records into persuasive, court-ready legal arguments.`,
         actionableDetails: {
           miniProjectIdea: "Draft a complete Motion for Summary Judgment including statement of undisputed facts, memorandum of points and authorities.",
-          githubRepoSuggestions: ["courtlistener/motion-samples", "legal-writing/brief-bank"],
+          githubRepoSuggestions: ["SuffolkLITLab/docassemble-AssemblyLine", "freelawproject/courtlistener"],
           interviewQuestions: [
             "How do you structure the argument section of a brief to maximize persuasive momentum?",
             "What is the standard of review applied by appellate panels to questions of law vs questions of fact?"
@@ -366,7 +366,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `High-value legal counsel shields clients from regulatory exposure and contractual disputes before litigation occurs.`,
         actionableDetails: {
           miniProjectIdea: "Draft and redline a Master Services Agreement (MSA) with bespoke risk allocation clauses for an enterprise client.",
-          githubRepoSuggestions: ["commonaccord/contract-blueprints", "open-contracts/templates"],
+          githubRepoSuggestions: ["freelawproject/courtlistener", "SuffolkLITLab/docassemble-AssemblyLine"],
           interviewQuestions: [
             "How do you negotiate indemnification carve-outs for gross negligence and willful misconduct?",
             "What mechanisms do you implement to prevent ambiguous liquidated damages clauses from being struck down as penalties?"
@@ -386,7 +386,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `The definitive proof of courtroom readiness, composure under judicial questioning, and client advocacy.`,
         actionableDetails: {
           miniProjectIdea: "Prepare and present a complete simulated civil or regulatory trial binder including exhibit lists and evidentiary objections.",
-          githubRepoSuggestions: ["moot-court/case-binders", "trial-advocacy/cross-examination-guides"],
+          githubRepoSuggestions: ["freelawproject/recap", "freelawproject/courtlistener"],
           interviewQuestions: [
             "How do you impeach a hostile witness on cross-examination using prior inconsistent deposition testimony?",
             "Walk through your objection under Federal Rule of Evidence 403 when relevant evidence is unfairly prejudicial."
@@ -406,7 +406,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Ensures legal licensure eligibility and positions you for associate appointments or corporate counsel roles.`,
         actionableDetails: {
           miniProjectIdea: "Complete comprehensive multi-state bar essay simulations and conduct partner-level mock callback interviews.",
-          githubRepoSuggestions: ["bar-prep/mbe-outlines", "legal-ethics/mpre-practice"],
+          githubRepoSuggestions: ["https://github.com/topics/legal-tech", "freelawproject/courtlistener"],
           interviewQuestions: [
             "How do you resolve a client-directed strategy that violates ethical obligations of candor toward the tribunal?",
             "Tell me about a high-pressure deadline where you managed conflicting case priorities."
@@ -437,7 +437,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Educators must ground instructional choices in cognitive science to foster meaningful learning for ${targetRole}.`,
         actionableDetails: {
           miniProjectIdea: "Design a developmental learning profile and accommodation matrix for diverse learner profiles across Grade levels.",
-          githubRepoSuggestions: ["open-education/pedagogy-frameworks", "oer/curriculum-standards"],
+          githubRepoSuggestions: ["openedx/edx-platform", "moodle/moodle"],
           interviewQuestions: [
             "How do you scaffold high-order synthesis questions for students operating below reading proficiency?",
             "Explain how Vygotsky's social constructivism informs peer collaborative group design."
@@ -457,7 +457,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Ensures lesson daily objectives directly ladder into mandatory district curricular outcomes and assessments.`,
         actionableDetails: {
           miniProjectIdea: "Author a complete 4-week Understanding by Design (UbD) curricular unit blueprint aligned with state standards.",
-          githubRepoSuggestions: ["commoncore/standards-crosswalk", "curriculum-design/ubd-templates"],
+          githubRepoSuggestions: ["khan/khan-exercises", "openedx/edx-platform"],
           interviewQuestions: [
             "How do you reconcile teaching for standardized state tests while maintaining deep conceptual understanding?",
             "What process do you follow when unbundling an ambiguous curriculum standard into daily learning targets?"
@@ -477,7 +477,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Transforms abstract learning objectives into dynamic daily classroom experiences where every student is challenged.`,
         actionableDetails: {
           miniProjectIdea: "Create a 5-day tiered lesson plan portfolio with explicit exit tickets, check-for-understanding protocols, and rubrics.",
-          githubRepoSuggestions: ["lesson-plans/open-curriculum", "rubrics-bank/formative-assessments"],
+          githubRepoSuggestions: ["oppia/oppia", "moodle/moodle"],
           interviewQuestions: [
             "What specific instructional pivots do you execute mid-period when formative exit data indicates 40% non-mastery?",
             "How do you design single-point rubrics that encourage student self-assessment and metacognition?"
@@ -497,7 +497,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Academic learning cannot occur without emotional safety, clear routines, and respectful classroom culture.`,
         actionableDetails: {
           miniProjectIdea: "Write an end-to-end Classroom Management & Restorative Culture Plan covering routines, praise-to-correction ratios, and family communication.",
-          githubRepoSuggestions: ["pbis/classroom-systems", "restorative-practices/handbook"],
+          githubRepoSuggestions: ["openedx/edx-platform", "khan/khan-exercises"],
           interviewQuestions: [
             "How do you de-escalate a defiant student without disrupting the instructional rhythm of the remaining class?",
             "Describe how you partner with disengaged parents or guardians to support student growth."
@@ -517,7 +517,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `The essential credentialing milestone proving live instructional competence to school principals and hiring boards.`,
         actionableDetails: {
           miniProjectIdea: "Assemble an edTPA / teaching performance assessment dossier containing recorded lessons, student work samples, and analytical reflections.",
-          githubRepoSuggestions: ["edtpa/sample-commentaries", "teaching-portfolio/evidence-binders"],
+          githubRepoSuggestions: ["oppia/oppia", "openedx/edx-platform"],
           interviewQuestions: [
             "Walk me through a lesson that did not go according to plan and how you analyzed the instructional failure afterward.",
             "How do you adapt instructional delivery for English Language Learners (ELL) in a mainstream classroom?"
@@ -537,7 +537,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Completes legal teaching authorization and prepares you to win tenure-track positions in competitive school districts.`,
         actionableDetails: {
           miniProjectIdea: "Deliver a 20-minute live demonstration lesson before an administrator hiring panel and defend curricular choices.",
-          githubRepoSuggestions: ["praxis-prep/study-guides", "teacher-interviews/demo-lesson-blueprints"],
+          githubRepoSuggestions: ["https://github.com/topics/education", "openedx/edx-platform"],
           interviewQuestions: [
             "What is your philosophy on grading and homework, and how does it promote educational equity?",
             "Why do you want to teach in this specific school community and how will you support our school goals?"
@@ -568,7 +568,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `The universal language of business. Every financial analyst and accountant must trace dollar movements across all three statements.`,
         actionableDetails: {
           miniProjectIdea: "Build a dynamically linked 3-statement financial model in Excel with historical normalization and 5-year projections.",
-          githubRepoSuggestions: ["financial-modeling/excel-templates", "open-fin-data/sec-edgar-filings"],
+          githubRepoSuggestions: ["ranaroussi/yfinance", "edgarminers/edgar"],
           interviewQuestions: [
             "Walk me through how a $10 increase in depreciation flows through all three financial statements.",
             "If working capital increases by $50M, how does that impact free cash flow and cash balance?"
@@ -588,7 +588,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Macroeconomic environment dictates discount rates, cost of capital, and capital allocation strategies for ${targetRole}.`,
         actionableDetails: {
           miniProjectIdea: "Author an economic research brief analyzing yield curve shifts, Federal Reserve rate expectations, and sector rotations.",
-          githubRepoSuggestions: ["macro-data/fred-api-samples", "financial-economics/interest-rates"],
+          githubRepoSuggestions: ["ranaroussi/yfinance", "matplotlib/mplfinance"],
           interviewQuestions: [
             "What economic signals does an inverted Treasury yield curve convey about forward recession probabilities?",
             "How does unexpected inflation affect fixed-income bond duration and equity earnings multiples?"
@@ -608,7 +608,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `The core quantitative engine utilized by investment banks, equity research, and private equity to value businesses.`,
         actionableDetails: {
           miniProjectIdea: "Build an institutional-grade DCF valuation model for an S&P 500 company complete with Monte Carlo sensitivity tables.",
-          githubRepoSuggestions: ["damodaran/valuation-spreadsheets", "cfa-institute/valuation-models"],
+          githubRepoSuggestions: ["ranaroussi/yfinance", "edgarminers/edgar"],
           interviewQuestions: [
             "When would you use Gordon Growth vs Exit Multiple for terminal value, and what are the hidden assumptions of each?",
             "How do you calculate Weighted Average Cost of Capital (WACC) for a company with both convertible debt and preferred stock?"
@@ -628,7 +628,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `High-performing finance professionals manage return per unit of downside risk to protect institutional capital.`,
         actionableDetails: {
           miniProjectIdea: "Construct an efficient frontier multi-asset portfolio optimizer comparing historical vs simulated risk-adjusted returns.",
-          githubRepoSuggestions: ["quant-finance/portfolio-optimization", "open-risk/credit-risk-models"],
+          githubRepoSuggestions: ["robertmartin8/PyPortfolioOpt", "ranaroussi/yfinance"],
           interviewQuestions: [
             "Explain the difference between historical VaR and parametric VaR under non-normal fat-tailed distributions.",
             "What is bond convexity and why is positive convexity valuable to fixed-income asset managers?"
@@ -648,7 +648,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `The primary deliverable that lands investment banking, hedge fund, and equity research associate offers.`,
         actionableDetails: {
           miniProjectIdea: "Pitch an equity investment thesis to an investment committee with financial model, downside protections, and catalyst timeline.",
-          githubRepoSuggestions: ["hedge-fund/pitch-templates", "equity-research/sample-reports"],
+          githubRepoSuggestions: ["matplotlib/mplfinance", "ranaroussi/yfinance"],
           interviewQuestions: [
             "Pitch me a stock in under 3 minutes: What is the variant perception that the public market is missing?",
             "If your investment thesis hinges on margin expansion, what operational headwinds could invalidate your thesis?"
@@ -668,7 +668,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Solidifies tier-one industry credibility and clears rigorous Wall Street / corporate finance hiring bars.`,
         actionableDetails: {
           miniProjectIdea: "Complete timed financial modeling tests (LBO/DCF in 90 minutes) and participate in mock technical superdays.",
-          githubRepoSuggestions: ["cfa-study/notes-and-mock-exams", "wall-street-oasis/technical-guide"],
+          githubRepoSuggestions: ["https://github.com/topics/quantitative-finance", "ranaroussi/yfinance"],
           interviewQuestions: [
             "Walk me through an LBO: How do leverage, operational improvement, and multiple expansion generate private equity returns?",
             "What ethical obligations does a charterholder have when discovering material non-public information?"
@@ -700,7 +700,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Rigorous physical laws govern structural loads, heat dissipation, and energy conservation across all mechanical systems for ${targetRole}.`,
         actionableDetails: {
           miniProjectIdea: "Calculate thermal efficiency and entropy generation across a multi-stage gas turbine or engine cycle.",
-          githubRepoSuggestions: ["open-aerospace/thermo-models", "engineering-mechanics/stress-calculators"],
+          githubRepoSuggestions: ["nasa/CFS", "nasa/fprime"],
           interviewQuestions: [
             "Explain the difference between engineering stress and true stress in ductile metallic alloys.",
             "How does the Brayton cycle pressure ratio dictate thermal efficiency and turbine inlet temperature?"
@@ -720,7 +720,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Fluid interactions dictate aerodynamic lift/drag, cooling efficiency, and pressure losses in physical aerospace hardware.`,
         actionableDetails: {
           miniProjectIdea: "Model subsonic boundary layer separation across an airfoil or pipe constriction using numerical discretization.",
-          githubRepoSuggestions: ["openfoam/openfoam-tutorials", "aerodynamics/xfoil-python"],
+          githubRepoSuggestions: ["su2code/SU2", "nasa/CFS"],
           interviewQuestions: [
             "What triggers boundary layer separation and how does adverse pressure gradient promote stall?",
             "Explain the formation of oblique shock waves and normal shock waves in supersonic nozzles."
@@ -740,7 +740,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Industry engineers design directly in parametric CAD and validate stress concentrations digitally prior to physical fabrication.`,
         actionableDetails: {
           miniProjectIdea: "Design an optimized aerospace bracket or engine mount in CAD and perform FEA topology optimization to minimize mass under 5g loads.",
-          githubRepoSuggestions: ["ansys/fea-examples", "freecad/freecad-models"],
+          githubRepoSuggestions: ["nasa/openvsp", "su2code/SU2"],
           interviewQuestions: [
             "How do you determine whether an FEA mesh has converged versus displaying artificial numerical singularity stress?",
             "Explain GD&T maximum material condition (MMC) and how it affects manufacturing cost."
@@ -760,7 +760,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Core domain expertise that separates generic mechanical grads from specialized propulsion and robotics engineers.`,
         actionableDetails: {
           miniProjectIdea: isAero ? "Design a de Laval rocket nozzle contour in Python/Matlab and simulate thrust coefficient across altitude variations." : "Build a motorized 4-bar linkage mechanism with sensor feedback and dynamic torque balancing.",
-          githubRepoSuggestions: ["rocket-propulsion/nozzle-design", "nasa/openvsp"],
+          githubRepoSuggestions: ["nasa/openvsp", "nasa/fprime"],
           interviewQuestions: [
             "What causes combustion instability in liquid rocket engines, and how do injector designs dampen it?",
             "How do you calculate fatigue life and S-N curves for rotating shafts subject to cyclic bending loads?"
@@ -780,7 +780,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `The centerpiece of your engineering portfolio demonstrating that you can build mission-critical hardware to spec.`,
         actionableDetails: {
           miniProjectIdea: "Design, simulate, and fabricate a functional CubeSat structure or mechanical mechanism with detailed test readiness review (TRR).",
-          githubRepoSuggestions: ["cubesat/open-satellite-designs", "nasa/systems-engineering-handbook"],
+          githubRepoSuggestions: ["nasa/CFS", "nasa/fprime"],
           interviewQuestions: [
             "Walk through your margin of safety calculation for the critical structural member in your capstone design.",
             "How did your thermal vacuum or vibration testing data compare against your preliminary FEA simulations?"
@@ -800,7 +800,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Positions you to clear grueling technical screening panels at organizations like SpaceX, NASA, Boeing, Lockheed, and premier engineering firms.`,
         actionableDetails: {
           miniProjectIdea: "Compile a 15-page visual hardware engineering portfolio highlighting CAD renders, FEA plots, and physical prototype photos.",
-          githubRepoSuggestions: ["engineering-interviews/hardware-questions", "aerospace-career/portfolio-guides"],
+          githubRepoSuggestions: ["https://github.com/topics/aerospace", "nasa/CFS"],
           interviewQuestions: [
             "Estimate the mass of an uncrewed lunar lander from first principles given delta-V requirements.",
             "Why do titanium alloys offer superior strength-to-weight at elevated temperatures compared to 7075 aluminum?"
@@ -831,7 +831,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Every bridge, high-rise, and foundation relies on structural mechanics to prevent catastrophic structural collapse.`,
         actionableDetails: {
           miniProjectIdea: "Calculate shear and bending moment envelopes for a continuous multi-span bridge girder under vehicular live loads.",
-          githubRepoSuggestions: ["civil-engineering/structural-analysis", "open-seismo/earthquake-engineering"],
+          githubRepoSuggestions: ["IfcOpenShell/IfcOpenShell", "Ladybug-Tools/ladybug"],
           interviewQuestions: [
             "How do you determine whether a structural truss is statically determinate, indeterminate, or unstable?",
             "Explain the difference between elastic deformation and plastic hinge formation in structural steel beams."
@@ -851,7 +851,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Structures are only as reliable as the subsurface soil transferring dead and live foundation loads.`,
         actionableDetails: {
           miniProjectIdea: "Calculate shallow and deep pile foundation bearing capacity from standard penetration test (SPT) borehole logs.",
-          githubRepoSuggestions: ["geotech/soil-mechanics-scripts", "open-geotech/bearing-capacity"],
+          githubRepoSuggestions: ["Ladybug-Tools/ladybug", "IfcOpenShell/IfcOpenShell"],
           interviewQuestions: [
             "Explain Terzaghi's effective stress principle and how pore water pressure reduces soil shear strength.",
             "What factors govern consolidation settlement in saturated cohesive clay layers?"
@@ -871,7 +871,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Demonstrates mastery of national building codes required by professional engineering consulting firms.`,
         actionableDetails: {
           miniProjectIdea: "Design and size all structural members and rebar schedules for a 4-story reinforced concrete commercial building frame.",
-          githubRepoSuggestions: ["structural-codes/aci-318-design", "aisc/steel-construction-manual"],
+          githubRepoSuggestions: ["IfcOpenShell/IfcOpenShell", "Ladybug-Tools/ladybug"],
           interviewQuestions: [
             "Why do building codes require under-reinforced concrete beams rather than over-reinforced sections?",
             "How do you design structural steel moment connections to resist seismic drift without brittle fracture?"
@@ -891,7 +891,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Modern architecture, engineering, and construction (AEC) firms require seamless digital BIM coordination across trades.`,
         actionableDetails: {
           miniProjectIdea: "Develop a complete structural BIM model in Autodesk Revit with coordinated sheet sets, schedules, and structural details.",
-          githubRepoSuggestions: ["autodesk/revit-sample-projects", "dynamo-ds/dynamo-revit"],
+          githubRepoSuggestions: ["DynamoDS/Dynamo", "IfcOpenShell/IfcOpenShell"],
           interviewQuestions: [
             "How do you coordinate structural models with MEP and architectural trades to prevent on-site clashes?",
             "Explain the difference between geometric Level of Development (LOD 300) vs LOD 400 fabrication models."
@@ -911,7 +911,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `The flagship portfolio centerpiece demonstrating full project execution from site surveying to stamped calculation packages.`,
         actionableDetails: {
           miniProjectIdea: "Produce a 50-page professional calculation package and drawing set for a municipal infrastructure project reviewed by PE mentors.",
-          githubRepoSuggestions: ["civil-capstone/sample-calculation-packages", "fhwa/bridge-design-drawings"],
+          githubRepoSuggestions: ["IfcOpenShell/IfcOpenShell", "Ladybug-Tools/ladybug"],
           interviewQuestions: [
             "Walk through how your design accounts for 100-year seismic and wind gust load combinations.",
             "How do you incorporate sustainable materials and life-cycle cost analysis into municipal infrastructure bids?"
@@ -931,7 +931,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `EIT certification is the legally required stepping stone toward Professional Engineer (PE) licensure and career advancement.`,
         actionableDetails: {
           miniProjectIdea: "Complete full-length simulated FE Civil examinations and conduct technical interviews defending structural calculations.",
-          githubRepoSuggestions: ["ncees/fe-civil-reference-handbook", "civil-interviews/technical-questions"],
+          githubRepoSuggestions: ["https://github.com/topics/civil-engineering", "IfcOpenShell/IfcOpenShell"],
           interviewQuestions: [
             "Explain the ethical responsibility of a licensed Professional Engineer when safety compromises are pressured by a client.",
             "How do you handle unforeseen subsurface site conditions during active foundation excavation?"
@@ -962,7 +962,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Visual design is communication, not decoration. Every layout must effortlessly direct viewer attention in ${targetRole}.`,
         actionableDetails: {
           miniProjectIdea: "Design a series of 12 editorial print and digital posters exploring Gestalt principles using limited color palettes and strict grids.",
-          githubRepoSuggestions: ["design-resources/swiss-style-grids", "typography/specimen-sheets"],
+          githubRepoSuggestions: ["adobe/react-spectrum", "tailwindlabs/tailwindcss"],
           interviewQuestions: [
             "How do Gestalt grouping principles influence how a user scans an information-dense interface or editorial page?",
             "When is it justified to intentionally break a mathematical grid in a layout?"
@@ -982,7 +982,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Typography constitutes 90% of visual communication and immediately signals amateur vs elite design craftsmanship.`,
         actionableDetails: {
           miniProjectIdea: "Author and typeset a 24-page experimental typography specimen booklet showcasing contrasting type pairings and font hierarchies.",
-          githubRepoSuggestions: ["google/fonts-knowledge", "typography/type-pairing-guides"],
+          githubRepoSuggestions: ["google/fonts", "adobe/react-spectrum"],
           interviewQuestions: [
             "How do x-height and aperture size affect typeface legibility at small sizes on low-resolution displays?",
             "What mathematical rules do you apply when calculating modular scale line-heights across heading levels?"
@@ -1002,7 +1002,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Top-tier clients and studios hire designers who build cohesive, extensible brand systems rather than isolated logos.`,
         actionableDetails: {
           miniProjectIdea: "Build an end-to-end brand identity system for a challenger consumer brand complete with style guide and packaging prototypes.",
-          githubRepoSuggestions: ["brand-guidelines/open-brand-books", "figma/design-tokens-starter"],
+          githubRepoSuggestions: ["material-components/material-web", "tailwindlabs/tailwindcss"],
           interviewQuestions: [
             "Walk me through your process for pressure-testing a logo mark across 16px favicons to building-scale billboards.",
             "How do you defend a bold brand redesign to a risk-averse client leadership team?"
@@ -1022,7 +1022,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Modern product studios require designers who can architect scalable, dev-ready component libraries.`,
         actionableDetails: {
           miniProjectIdea: "Construct an accessible, multi-theme design system in Figma containing 40+ atomic components and interactive prototypes.",
-          githubRepoSuggestions: ["figma/community-design-systems", "radix-ui/primitives-figma"],
+          githubRepoSuggestions: ["tailwindlabs/tailwindcss", "adobe/react-spectrum"],
           interviewQuestions: [
             "How do you organize design tokens across semantic layers (global, alias, component) to support dark mode?",
             "Explain how you conduct WCAG 2.1 AA accessibility contrast audits on brand color palettes."
@@ -1042,7 +1042,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Your portfolio is the single determining factor in landing high-paying studio appointments and freelance commissions.`,
         actionableDetails: {
           miniProjectIdea: "Launch a live, beautifully animated web portfolio showcasing 3 comprehensive case studies with process videos.",
-          githubRepoSuggestions: ["portfolio/creative-portfolio-templates", "case-studies/design-writeups"],
+          githubRepoSuggestions: ["tailwindlabs/tailwindcss", "adobe/react-spectrum"],
           interviewQuestions: [
             "Walk me through the most significant strategic compromise you had to make in your flagship case study.",
             "How did user feedback or client critique fundamentally alter your initial creative direction?"
@@ -1062,7 +1062,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Transforms visual talent into executive confidence during high-stakes agency partner interviews.`,
         actionableDetails: {
           miniProjectIdea: "Conduct live timed design critique rounds with senior creative directors and refine project pitches.",
-          githubRepoSuggestions: ["design-interview/whiteboard-challenges", "creative-contracts/freelance-agreements"],
+          githubRepoSuggestions: ["https://github.com/topics/design-system", "tailwindlabs/tailwindcss"],
           interviewQuestions: [
             "How do you handle direct criticism from an executive who dislikes a design you spent three weeks perfecting?",
             "What is your approach to scoping creative briefs and managing scope creep during client engagements?"
@@ -1093,7 +1093,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Food safety protects lives and impeccable knife precision guarantees uniform cooking times across high-volume restaurant services.`,
         actionableDetails: {
           miniProjectIdea: "Execute a timed precision knife skills practical test and author a compliant HACCP kitchen sanitation logbook.",
-          githubRepoSuggestions: ["culinary-resources/knife-skills-guide", "food-safety/haccp-manual"],
+          githubRepoSuggestions: ["openfoodfacts/openfoodfacts-server", "tastyigniter/TastyIgniter"],
           interviewQuestions: [
             "What are the critical control points (CCPs) and corrective actions when cooling hot stocks from 135°F to 41°F?",
             "How do you maintain blade geometry and stone sharpening angles on carbon vs stainless steel chef knives?"
@@ -1113,7 +1113,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Sauces are the foundation of classical cuisine and demonstrate thermal control, emulsion stability, and seasoning balance.`,
         actionableDetails: {
           miniProjectIdea: "Prepare and plate a mother sauce lineage showcase with warm and cold emulsion stability testing.",
-          githubRepoSuggestions: ["culinary-arts/classical-sauces", "food-science/emulsion-stability"],
+          githubRepoSuggestions: ["openfoodfacts/openfoodfacts-server", "tastyigniter/TastyIgniter"],
           interviewQuestions: [
             "How do you rescue a broken Hollandaise or Béarnaise emulsion without altering the flavor profile?",
             "What is the difference between brown veal stock and a reduction glace de viande in terms of gelatin yield?"
@@ -1133,7 +1133,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Separates basic line cooks from skilled chefs capable of executing consistent proteins under high cover counts.`,
         actionableDetails: {
           miniProjectIdea: "Execute a multi-protein cooking trial documenting internal temperature curves, carryover cooking, and texture yields.",
-          githubRepoSuggestions: ["modernist-cuisine/sous-vide-tables", "meat-science/protein-temperatures"],
+          githubRepoSuggestions: ["openfoodfacts/openfoodfacts-server", "tastyigniter/TastyIgniter"],
           interviewQuestions: [
             "How does carryover cooking vary between high-heat roasting vs low-temperature immersion water baths?",
             "Explain collagen breakdown into gelatin in tough secondary cuts and how braising liquids facilitate this."
@@ -1153,7 +1153,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `High-end kitchens operate like synchronized military units; chefs must maintain composure under intense time and heat pressure.`,
         actionableDetails: {
           miniProjectIdea: "Simulate a 50-cover dinner service expediting station managing multi-course ticket synchronization across stations.",
-          githubRepoSuggestions: ["kitchen-operations/brigade-system", "restaurant-management/ticket-flow"],
+          githubRepoSuggestions: ["tastyigniter/TastyIgniter", "openfoodfacts/openfoodfacts-server"],
           interviewQuestions: [
             "How do you prioritize station tickets when two tables fire simultaneously with different cook-time proteins?",
             "What immediate steps do you take when a station cook falls 15 minutes behind during a Friday night peak service?"
@@ -1173,7 +1173,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Executive chefs must combine culinary artistry with business profitability to ensure long-term restaurant viability.`,
         actionableDetails: {
           miniProjectIdea: "Design a 5-course seasonal tasting menu complete with butcher's yield sheets, plate cost breakdown, and vendor order guides.",
-          githubRepoSuggestions: ["restaurant-economics/menu-costing-sheets", "culinary-math/yield-calculators"],
+          githubRepoSuggestions: ["openfoodfacts/openfoodfacts-server", "tastyigniter/TastyIgniter"],
           interviewQuestions: [
             "How do you maintain menu profitability when core protein commodity prices spike 20% in a quarter?",
             "Explain butcher's yield percentage and how you utilize secondary trimmings to improve cost margins."
@@ -1193,7 +1193,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `The live cooking audition is the definitive hiring barrier for executive chef and head kitchen appointments.`,
         actionableDetails: {
           miniProjectIdea: "Execute a 3-course mystery box culinary tasting for guest culinary evaluators within a strict 90-minute time constraint.",
-          githubRepoSuggestions: ["culinary-auditions/tasting-rubrics", "chef-interviews/mystery-basket-prep"],
+          githubRepoSuggestions: ["https://github.com/topics/food-safety", "openfoodfacts/openfoodfacts-server"],
           interviewQuestions: [
             "How do you build a kitchen culture of zero tolerance for toxicity while maintaining exacting culinary standards?",
             "Walk me through your dish concept: What flavor balance (acid, fat, salt, heat) were you aiming to achieve?"
@@ -1224,7 +1224,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Strategic business decisions require rigorous market evidence rather than executive intuition for ${targetRole}.`,
         actionableDetails: {
           miniProjectIdea: "Conduct 15 customer discovery interviews and synthesize findings into an ICP (Ideal Customer Profile) and TAM model.",
-          githubRepoSuggestions: ["market-research/tam-sam-som-models", "customer-discovery/interview-scripts"],
+          githubRepoSuggestions: ["https://github.com/topics/market-research", "ranaroussi/yfinance"],
           interviewQuestions: [
             "How do you calculate top-down vs bottom-up TAM, and why do investors prefer bottom-up methodologies?",
             "What questioning techniques prevent confirmation bias during early customer discovery interviews?"
@@ -1244,7 +1244,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Commercial leaders must demonstrate that every marketing dollar generates profitable, sustainable revenue.`,
         actionableDetails: {
           miniProjectIdea: "Build a financial unit economics model stress-testing LTV/CAC ratios across varying churn and expansion revenue scenarios.",
-          githubRepoSuggestions: ["saas-metrics/ltv-cac-calculators", "pricing-strategy/models"],
+          githubRepoSuggestions: ["ranaroussi/yfinance", "https://github.com/topics/business-intelligence"],
           interviewQuestions: [
             "If customer payback period expands from 8 months to 18 months, what immediate strategic levers do you adjust?",
             "Explain the difference between cost-plus pricing, competitor-based pricing, and value-based pricing."
@@ -1264,7 +1264,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Separates theoretical strategists from operators who can predictably generate qualified pipeline and scale revenues.`,
         actionableDetails: {
           miniProjectIdea: "Launch a live test acquisition campaign and build an attribution dashboard tracking conversion drop-offs across funnel stages.",
-          githubRepoSuggestions: ["growth-marketing/attribution-models", "funnel-analytics/dashboards"],
+          githubRepoSuggestions: ["matplotlib/mplfinance", "ranaroussi/yfinance"],
           interviewQuestions: [
             "Compare first-touch, last-touch, and W-shaped attribution models for enterprise B2B sales cycles.",
             "How do you diagnose whether low pipeline conversion stems from top-of-funnel lead quality vs sales execution?"
@@ -1284,7 +1284,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `High-value revenue outcomes depend on disciplined deal execution and closing large commercial agreements.`,
         actionableDetails: {
           miniProjectIdea: "Draft a comprehensive enterprise sales playbook featuring discovery call frameworks and multi-stakeholder negotiation strategies.",
-          githubRepoSuggestions: ["sales-playbooks/meddic-templates", "negotiation/deal-review-frameworks"],
+          githubRepoSuggestions: ["https://github.com/topics/sales", "TheAlgorithms/Python"],
           interviewQuestions: [
             "Walk through how you uncover the true Economic Buyer and Decision Criteria in a complex enterprise account.",
             "How do you negotiate multi-year contract renewals without offering destructive discounting concessions?"
@@ -1304,7 +1304,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `The definitive executive portfolio piece proving readiness for Director, VP, and General Management responsibilities.`,
         actionableDetails: {
           miniProjectIdea: "Pitch a board-level Go-To-Market expansion strategy complete with risk mitigation and revenue projections.",
-          githubRepoSuggestions: ["gtm-playbooks/launch-strategies", "board-decks/executive-presentations"],
+          githubRepoSuggestions: ["https://github.com/topics/business", "ranaroussi/yfinance"],
           interviewQuestions: [
             "Present your GTM plan: What is the highest-risk assumption in your model and how will you validate it in the first 60 days?",
             "How do you align product development priorities with commercial sales pipeline commitments?"
@@ -1324,7 +1324,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Converts operational excellence into executive appointments and compensation packages.`,
         actionableDetails: {
           miniProjectIdea: "Complete live timed business case study presentations defending P&L trade-offs before executive mentors.",
-          githubRepoSuggestions: ["case-interviews/business-frameworks", "executive-leadership/interview-guides"],
+          githubRepoSuggestions: ["https://github.com/topics/management", "TheAlgorithms/Python"],
           interviewQuestions: [
             "Describe a time you had to pivot commercial strategy under unexpected market disruption.",
             "How do you build team accountability without stifling creative experimentation and risk-taking?"
@@ -1486,7 +1486,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Provides the theoretical grounding and analytical rigor required to understand complex domain challenges in ${targetRole}.`,
         actionableDetails: {
           miniProjectIdea: `Author an analytical foundational study deconstructing the primary methodologies and standards used in ${targetRole}.`,
-          githubRepoSuggestions: ["open-knowledge/domain-foundations", "academic-resources/methodology-guides"],
+          githubRepoSuggestions: ["TheAlgorithms/Python", "public-apis/public-apis"],
           interviewQuestions: [
             `What are the core foundational principles that guide decision-making for a professional ${targetRole}?`,
             `How do you stay current with advancing industry standards and research in ${targetRole}?`
@@ -1506,7 +1506,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Ensures all professional practice adheres to legal mandates, client protections, and industry trust.`,
         actionableDetails: {
           miniProjectIdea: `Conduct a regulatory and ethical compliance audit covering operational protocols and risk mitigation in ${targetRole}.`,
-          githubRepoSuggestions: ["ethics-institute/professional-conduct", "compliance-guides/standards"],
+          githubRepoSuggestions: ["freeCodeCamp/freeCodeCamp", "TheAlgorithms/Python"],
           interviewQuestions: [
             `Describe how you navigate an ethical dilemma when client or organizational pressures conflict with professional codes of conduct.`,
             `What regulatory oversight bodies govern practice in ${targetRole} and how do you ensure adherence?`
@@ -1526,7 +1526,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Directly targets the functional competencies and daily task execution demanded by employers for ${targetRole}.`,
         actionableDetails: {
           miniProjectIdea: `Complete a multi-stage applied case study solving a complex real-world operational challenge in ${targetRole}.`,
-          githubRepoSuggestions: ["case-studies/open-practice", "professional-toolkits/methodologies"],
+          githubRepoSuggestions: ["public-apis/public-apis", "TheAlgorithms/Python"],
           interviewQuestions: [
             `Walk me through your step-by-step methodology when approaching an ambiguous, high-stakes problem in ${targetRole}.`,
             `What tools or specialized techniques do you rely upon to verify data accuracy and execution quality?`
@@ -1546,7 +1546,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Proves to hiring managers and professional review boards that you can translate knowledge into tangible results.`,
         actionableDetails: {
           miniProjectIdea: `Author and publish a comprehensive professional work sample or case report reviewed against professional peer standards.`,
-          githubRepoSuggestions: ["work-samples/case-archives", "fieldwork-guides/practice-templates"],
+          githubRepoSuggestions: ["TheAlgorithms/Python", "public-apis/public-apis"],
           interviewQuestions: [
             `Describe a setback or unexpected variable you encountered during your practical project and how you adapted.`,
             `How did you measure the tangible impact or efficacy of your project deliverable?`
@@ -1566,7 +1566,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `The definitive proof of competence on your resume that bypasses generic screening filters and lands executive interviews.`,
         actionableDetails: {
           miniProjectIdea: `Assemble and publish a curated professional portfolio dossier highlighting 3 comprehensive case studies with rationale.`,
-          githubRepoSuggestions: ["portfolio-templates/professional-showcase", "case-study-bank/excellence"],
+          githubRepoSuggestions: ["freeCodeCamp/freeCodeCamp", "TheAlgorithms/Python"],
           interviewQuestions: [
             `Walk me through the most challenging case study in your portfolio: What was your strategy and how did you resolve trade-offs?`,
             `If you were to redo this project with unlimited resources, what would you expand or do differently?`
@@ -1586,7 +1586,7 @@ function generateDomainFallbackRoadmap(input: GenerateRoadmapInput): RoadmapData
         whyItMatters: `Bridges demonstrable competence into authorized practice, verified credentials, and high-impact job offers.`,
         actionableDetails: {
           miniProjectIdea: `Conduct simulated panel interviews with senior practitioners in ${targetRole} and polish professional credentials.`,
-          githubRepoSuggestions: ["career-prep/professional-interviews", "licensure-guides/board-prep"],
+          githubRepoSuggestions: ["TheAlgorithms/Python", "freeCodeCamp/freeCodeCamp"],
           interviewQuestions: [
             `Why are you uniquely equipped to excel as a ${targetRole} in our organization?`,
             `Describe a high-pressure scenario where you demonstrated exceptional leadership and emotional composure.`
