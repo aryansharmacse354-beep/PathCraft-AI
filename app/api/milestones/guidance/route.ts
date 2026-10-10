@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateMilestoneGuidanceAI } from "../../../../lib/ai/client";
 import { z } from "zod";
 
+export const maxDuration = 60;
+
 const GuidanceInputSchema = z.object({
   milestoneId: z.string(),
   nodeTitle: z.string(),

@@ -3,6 +3,8 @@ import { RoadmapSchema } from "../../../../lib/types/roadmap";
 import { replanRoadmap } from "../../../../lib/utils/graphEngine";
 import { z } from "zod";
 
+export const maxDuration = 60;
+
 const ReplanInputSchema = z.object({
   roadmap: RoadmapSchema,
   nodeStates: z.record(z.string(), z.enum(["locked", "available", "in_progress", "completed", "known"])),

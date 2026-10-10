@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { GenerateRoadmapInputSchema } from "../../../../lib/types/roadmap";
 import { generateRoadmapAI } from "../../../../lib/ai/client";
 
+export const maxDuration = 60;
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();

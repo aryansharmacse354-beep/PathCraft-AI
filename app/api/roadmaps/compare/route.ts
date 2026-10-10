@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { generatePathComparisonAI } from "../../../../lib/ai/client";
 import { z } from "zod";
 
+export const maxDuration = 60;
+
 const CompareInputSchema = z.object({
   roleA: z.string().min(2),
   roleB: z.string().min(2)

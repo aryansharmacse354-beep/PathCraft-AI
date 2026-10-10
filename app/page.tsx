@@ -25,27 +25,34 @@ import {
 } from "lucide-react";
 
 const SAMPLE_SUGGESTIONS = [
-  "Full Stack Developer at a Climate-Tech Startup",
-  "AI Engineer at an Autonomous Robotics Scale-up",
-  "Cybersecurity Architect in Decentralized FinTech",
-  "UI/UX Product Designer for Healthcare Applications"
+  "Pediatric Nurse Practitioner in Critical Care",
+  "Corporate M&A Lawyer & Regulatory Counsel",
+  "High School STEM Teacher & Curriculum Specialist",
+  "Aerospace Propulsion Engineer for Satellite Launchers",
+  "Chartered Financial Analyst (CFA) in Asset Management",
+  "Executive Sous Chef specializing in Contemporary Cuisine",
+  "Brand & Visual Identity Designer",
+  "Full Stack Developer at a Climate-Tech Startup"
 ];
 
 const COMMON_SKILL_OPTIONS = [
-  "Git & GitHub",
-  "TypeScript",
-  "Python",
-  "React",
-  "Docker",
-  "SQL",
-  "REST APIs"
+  "Research & Analysis",
+  "Project Management",
+  "Data & Statistics",
+  "Public Speaking",
+  "Regulatory Compliance",
+  "Technical Writing",
+  "Adobe Creative Suite",
+  "Spreadsheet Modeling",
+  "Python / Analytics",
+  "Git & GitHub"
 ];
 
 export default function Home() {
-  const [targetRole, setTargetRole] = useState("Full Stack Developer at a Climate-Tech Startup");
+  const [targetRole, setTargetRole] = useState("Pediatric Nurse Practitioner in Critical Care");
   const [weeklyHours, setWeeklyHours] = useState(15);
   const [durationMonths, setDurationMonths] = useState(6);
-  const [existingSkills, setExistingSkills] = useState<string[]>(["Git & GitHub"]);
+  const [existingSkills, setExistingSkills] = useState<string[]>(["Research & Analysis"]);
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
 
@@ -302,7 +309,7 @@ export default function Home() {
                   Reverse-Engineer Your Dream Role
                 </h1>
                 <p className="mx-auto mt-2 max-w-lg text-xs sm:text-sm text-slate-400">
-                  Transform any hyper-specific career goal into an interactive, game-inspired skill tree with customized mini-projects, GitHub blueprints, and interview challenges.
+                  Transform any profession across healthcare, law, engineering, education, finance, creative arts, trades, or tech into an interactive, dependency-aware career roadmap.
                 </p>
               </div>
 
@@ -311,14 +318,14 @@ export default function Home() {
                 {/* Dream Role Input */}
                 <div>
                   <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
-                    Target Dream Role & Industry
+                    Target Dream Role & Profession
                   </label>
                   <div className="relative mt-1.5">
                     <input
                       type="text"
                       value={targetRole}
                       onChange={(e) => setTargetRole(e.target.value)}
-                      placeholder="e.g. Full Stack Developer at a Climate-Tech Startup"
+                      placeholder="e.g. Registered Nurse in Critical Care, Corporate M&A Lawyer, High School Teacher, Financial Analyst..."
                       className="w-full rounded-xl border border-slate-700 bg-slate-900/90 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400"
                     />
                   </div>
