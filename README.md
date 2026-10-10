@@ -69,7 +69,9 @@ Beyond the core hackathon requirements, PathCraft AI introduces several high-imp
    npm run dev
    ```
 5. **Open Application**:
-   Navigate to [http://localhost:3000](http://localhost:3000) in your browser.
+   - Local: [http://localhost:3000](http://localhost:3000)
+   - Live Production URL: [https://careerroadmapper.vercel.app](https://careerroadmapper.vercel.app)
+
 
 ## Tools and AI used
 - **AI Models & Frameworks**: Google Gemini 1.5 Flash (via structured JSON mode), OpenAI GPT-4o, and Groq.
