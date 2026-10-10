@@ -84,7 +84,7 @@ export const PathComparisonSchema = z.object({
   sharedFoundations: z.array(z.string()),
   roleAUniqueSkills: z.array(z.string()),
   roleBUniqueSkills: z.array(z.string()),
-  pivotDifficulty: z.enum(["Low", "Moderate", "High"]),
+  pivotDifficulty: z.string(),
   strategicRecommendation: z.string()
 });
 export type PathComparison = z.infer<typeof PathComparisonSchema>;

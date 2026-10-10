@@ -28,48 +28,59 @@ function cleanAndParseJSON(raw: string): any {
 }
 
 /**
- * Call Google Gemini API
+ * Call Google Gemini API with model fallback
  */
 async function callGemini(apiKey: string, prompt: string, systemInstruction?: string): Promise<string> {
-  const model = "gemini-1.5-flash";
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  const models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
+  let lastError: any = null;
 
-  const payload: any = {
-    contents: [
-      {
-        role: "user",
-        parts: [{ text: prompt }]
+  for (const model of models) {
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+      const payload: any = {
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: prompt }]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.3,
+          responseMimeType: "application/json"
+        }
+      };
+
+      if (systemInstruction) {
+        payload.systemInstruction = {
+          parts: [{ text: systemInstruction }]
+        };
       }
-    ],
-    generationConfig: {
-      temperature: 0.3,
-      responseMimeType: "application/json"
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Gemini API error (${response.status}) on ${model}: ${errorText}`);
+      }
+
+      const data = await response.json();
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (text) {
+        return text;
+      }
+    } catch (err: any) {
+      lastError = err;
+      // Try next model in list
+      continue;
     }
-  };
-
-  if (systemInstruction) {
-    payload.systemInstruction = {
-      parts: [{ text: systemInstruction }]
-    };
   }
 
-  const response = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Gemini API error (${response.status}): ${errorText}`);
-  }
-
-  const data = await response.json();
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) {
-    throw new Error("Empty response received from Gemini API");
-  }
-  return text;
+  throw lastError || new Error("All Gemini model endpoints failed");
 }
 
 /**
@@ -720,9 +731,39 @@ Target Role: "${targetRole}"
 /**
  * Public Method: Generate Path Comparison
  */
+/**
+ * Public Method: Generate Path Comparison
+ */
 export async function generatePathComparisonAI(roleA: string, roleB: string): Promise<PathComparison> {
   const geminiKey = process.env.GEMINI_API_KEY;
-  const userPrompt = `Compare Role A: "${roleA}" vs Role B: "${roleB}". Return PathComparisonSchema JSON.`;
+  const openaiKey = process.env.OPENAI_API_KEY;
+  const groqKey = process.env.GROQ_API_KEY;
+
+  const userPrompt = `
+Conduct a rigorous, practical career path comparison between two distinct tech roles:
+Role A: "${roleA}"
+Role B: "${roleB}"
+
+Analyze:
+1. Specific common foundational skills shared by both roles.
+2. 4-6 specific technical skills and tools UNIQUE to "${roleA}".
+3. 4-6 specific technical skills and tools UNIQUE to "${roleB}".
+4. An estimated overlap percentage (0-100%).
+5. Pivot difficulty ("Low", "Moderate", or "High").
+6. Strategic recommendation explaining career mobility, hiring demand, and how to transition.
+
+Return STRICT JSON complying with this schema:
+{
+  "roleA": "${roleA}",
+  "roleB": "${roleB}",
+  "overlapPercentage": number,
+  "sharedFoundations": string[],
+  "roleAUniqueSkills": string[],
+  "roleBUniqueSkills": string[],
+  "pivotDifficulty": string,
+  "strategicRecommendation": string
+}
+`;
 
   if (geminiKey && geminiKey.trim().length > 0) {
     try {
@@ -732,32 +773,106 @@ export async function generatePathComparisonAI(roleA: string, roleB: string): Pr
       if (validated.success) {
         return validated.data;
       }
+      console.warn("Gemini comparison validation error, trying next:", validated.error);
     } catch (err) {
-      console.warn("Gemini comparison call failed, using smart fallback:", err);
+      console.warn("Gemini comparison call failed:", err);
     }
   }
+
+  if (openaiKey && openaiKey.trim().length > 0) {
+    try {
+      const rawText = await callOpenAICompatible(
+        openaiKey,
+        "https://api.openai.com/v1",
+        "gpt-4o",
+        userPrompt,
+        PATH_COMPARISON_SYSTEM_PROMPT
+      );
+      const parsed = cleanAndParseJSON(rawText);
+      const validated = PathComparisonSchema.safeParse(parsed);
+      if (validated.success) {
+        return validated.data;
+      }
+    } catch (err) {
+      console.warn("OpenAI comparison call failed:", err);
+    }
+  }
+
+  if (groqKey && groqKey.trim().length > 0) {
+    try {
+      const rawText = await callOpenAICompatible(
+        groqKey,
+        "https://api.groq.com/openai/v1",
+        "llama-3.3-70b-versatile",
+        userPrompt,
+        PATH_COMPARISON_SYSTEM_PROMPT
+      );
+      const parsed = cleanAndParseJSON(rawText);
+      const validated = PathComparisonSchema.safeParse(parsed);
+      if (validated.success) {
+        return validated.data;
+      }
+    } catch (err) {
+      console.warn("Groq comparison call failed:", err);
+    }
+  }
+
+  // Dynamic Domain-Specific Smart Fallback
+  const lowerA = roleA.toLowerCase();
+  const lowerB = roleB.toLowerCase();
+
+  const getSkillsForRole = (role: string) => {
+    const r = role.toLowerCase();
+    if (r.includes("frontend") || r.includes("ui") || r.includes("ux")) {
+      return ["React / Next.js", "Tailwind CSS & Design Systems", "State Management (Zustand/Redux)", "Web Performance & Core Web Vitals", "Accessibility (WCAG & ARIA)"];
+    }
+    if (r.includes("devops") || r.includes("cloud") || r.includes("sre") || r.includes("infrastructure")) {
+      return ["Terraform & Infrastructure as Code", "Docker & Kubernetes Orchestration", "CI/CD Pipeline Automation", "AWS / GCP Cloud Architectures", "Prometheus & Grafana Observability"];
+    }
+    if (r.includes("ai") || r.includes("machine learning") || r.includes("ml") || r.includes("deep learning")) {
+      return ["PyTorch / TensorFlow Deep Learning", "Transformer Attention & Fine-Tuning (LoRA)", "Agentic RAG & Vector Databases", "vLLM Inference Serving & CUDA", "Model Evaluation & Guardrails"];
+    }
+    if (r.includes("data") || r.includes("analytics")) {
+      return ["SQL & Advanced Window Functions", "Apache Spark & Distributed ETL", "dbt (data build tool)", "Data Warehousing (Snowflake/BigQuery)", "Data Modeling & Star Schemas"];
+    }
+    if (r.includes("security") || r.includes("cyber") || r.includes("pentest")) {
+      return ["Threat Modeling & Zero Trust Architecture", "Application Security (OWASP Top 10)", "Penetration Testing & Burp Suite", "Identity & Access Management (OAuth/SAML)", "SIEM & Incident Response"];
+    }
+    if (r.includes("climate") || r.includes("energy")) {
+      return ["GHG Protocol Carbon Accounting Standards", "TimescaleDB Time-Series Energy Datasets", "MQTT Sensor Telemetry Ingestion", "Green Software Foundation Principles", "Carbon Offset Verification APIs"];
+    }
+    // Default Fullstack/Backend
+    return [`Modern ${role} Architecture`, "REST & GraphQL API Engineering", "Relational Database Indexing", "Authentication & Session Security", "Automated Integration Testing"];
+  };
+
+  const skillsA = getSkillsForRole(roleA);
+  const skillsB = getSkillsForRole(roleB);
+
+  // Calculate dynamic overlap
+  let overlap = 45;
+  if ((lowerA.includes("full") && lowerB.includes("front")) || (lowerA.includes("front") && lowerB.includes("full"))) overlap = 65;
+  else if ((lowerA.includes("devops") && lowerB.includes("cloud")) || (lowerA.includes("sre") && lowerB.includes("devops"))) overlap = 80;
+  else if ((lowerA.includes("ai") && lowerB.includes("data")) || (lowerA.includes("data") && lowerB.includes("ai"))) overlap = 55;
+  else if ((lowerA.includes("design") && lowerB.includes("devops")) || (lowerA.includes("security") && lowerB.includes("design"))) overlap = 15;
+
+  let difficulty = "Moderate";
+  if (overlap >= 60) difficulty = "Low";
+  else if (overlap <= 25) difficulty = "High";
 
   return {
     roleA,
     roleB,
-    overlapPercentage: 62,
+    overlapPercentage: overlap,
     sharedFoundations: [
-      "Modern TypeScript / Python fundamentals",
-      "Git workflow, CI/CD & Docker containerization",
-      "System design principles & distributed API architecture",
-      "Relational & non-relational database querying"
+      "Version Control (Git & Trunk-Based Development)",
+      "Linux Command Line & Shell Scripting",
+      "Software Development Life Cycle & Clean Code Principles",
+      "API Communications & Network Fundamentals",
+      "Continuous Integration & Testing Mindset"
     ],
-    roleAUniqueSkills: [
-      `Specialized domain frameworks required exclusively for ${roleA}`,
-      `Industry compliance and regulatory standards specific to ${roleA}`,
-      `Targeted portfolio projects and customized interview question sets`
-    ],
-    roleBUniqueSkills: [
-      `Divergent tooling, algorithms, and libraries specific to ${roleB}`,
-      `Alternative performance optimization metrics and throughput goals`,
-      `Specialized hardware, cloud, or client-side runtime considerations`
-    ],
-    pivotDifficulty: "Moderate",
-    strategicRecommendation: `Because these roles share over 60% of foundational engineering principles, you can master common core milestones first. Once foundational nodes are complete, branching into either role requires only 4-6 focused weeks of specialized domain training.`
+    roleAUniqueSkills: skillsA,
+    roleBUniqueSkills: skillsB,
+    pivotDifficulty: difficulty,
+    strategicRecommendation: `Pivoting between ${roleA} and ${roleB} involves an estimated ${overlap}% skill transferability. You can leverage your common foundations in version control, system fundamentals, and testing to accelerate your timeline. Focus your dedicated study hours on the specialized tools listed in the comparison columns.`
   };
 }
