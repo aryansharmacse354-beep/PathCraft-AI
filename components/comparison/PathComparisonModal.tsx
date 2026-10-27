@@ -112,32 +112,34 @@ export function PathComparisonModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-md overflow-y-auto">
-      <div className="relative my-8 w-full max-w-3xl rounded-2xl border border-slate-800 bg-[#0F172A] p-6 shadow-2xl">
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute right-4 top-4 rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition"
-          aria-label="Close modal"
-        >
-          <X className="h-5 w-5" />
-        </button>
-
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-2 sm:p-4 backdrop-blur-md">
+      <div className="relative w-full max-w-3xl max-h-[92dvh] flex flex-col rounded-2xl border border-slate-800 bg-[#0F172A] shadow-2xl overflow-hidden">
         {/* Modal Header */}
-        <div className="flex items-center gap-2.5 text-cyan-400">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-950/60 border border-cyan-500/40">
-            <GitCompare className="h-5 w-5 text-cyan-400" />
+        <div className="flex items-center justify-between border-b border-slate-800 p-3.5 sm:p-5 flex-shrink-0">
+          <div className="flex items-center gap-2.5 text-cyan-400 pr-4">
+            <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-cyan-950/60 border border-cyan-500/40 flex-shrink-0">
+              <GitCompare className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400" />
+            </div>
+            <div>
+              <h2 className="text-sm sm:text-lg font-bold text-white leading-tight">Dual Career Path Comparison</h2>
+              <p className="text-[10px] sm:text-xs text-slate-400 line-clamp-1 mt-0.5">
+                Analyze shared foundations, unique specializations, and pivot feasibility between two roles.
+              </p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-lg font-bold text-white">Dual Career Path Comparison</h2>
-            <p className="text-xs text-slate-400">
-              Analyze shared foundation competencies, distinct specializations, and transferability between two target careers.
-            </p>
-          </div>
+          <button
+            onClick={onClose}
+            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition flex-shrink-0"
+            aria-label="Close modal"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
 
-        {/* Role Inputs Grid */}
-        <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Scrollable Modal Content */}
+        <div className="overflow-y-auto p-3.5 sm:p-6 flex-1 space-y-4">
+          {/* Role Inputs Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           {/* Role A */}
           <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-3.5">
             <label className="text-[11px] font-semibold text-cyan-300 uppercase tracking-wider">
@@ -338,6 +340,7 @@ export function PathComparisonModal({
             </div>
           </div>
         )}
+        </div>
       </div>
     </div>
   );

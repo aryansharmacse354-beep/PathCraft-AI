@@ -759,92 +759,100 @@ export function MilestoneInspector({
   };
 
   return (
-    <div className="fixed inset-y-0 right-0 z-50 flex w-full max-w-lg flex-col border-l border-slate-800 bg-[#0F172A]/95 p-6 shadow-2xl backdrop-blur-xl sm:w-[480px]">
-      {/* Header */}
-      <div className="flex items-start justify-between border-b border-slate-800 pb-4">
-        <div>
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-cyan-400">
-            {milestone.phase}
-          </span>
-          <h2 className="mt-1 text-lg font-bold text-white leading-snug">
-            {milestone.title}
-          </h2>
-          <div className="mt-2 flex flex-wrap items-center gap-2.5 text-xs text-slate-400">
-            <span className="flex items-center gap-1">
-              <Clock className="h-3.5 w-3.5 text-cyan-400" />
-              {milestone.estimatedHours} hours
+    <>
+      {/* Backdrop overlay for tap-outside to dismiss on mobile & laptop */}
+      <div
+        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs transition-opacity"
+        onClick={onClose}
+        aria-label="Close inspector drawer overlay"
+      />
+
+      <div className="fixed inset-y-0 right-0 z-50 flex w-full max-w-full sm:max-w-md md:max-w-lg lg:w-[500px] h-[100dvh] flex-col border-l border-slate-800 bg-[#0F172A]/98 p-4 sm:p-6 shadow-2xl backdrop-blur-xl">
+        {/* Header */}
+        <div className="flex items-start justify-between border-b border-slate-800 pb-3 sm:pb-4">
+          <div className="pr-2">
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-cyan-400">
+              {milestone.phase}
             </span>
-            <span className="rounded bg-slate-800 px-2 py-0.5 text-slate-300 font-medium capitalize">
-              {milestone.category}
-            </span>
-            {milestone.status === "in_progress" && (
-              <span className="flex items-center gap-1.5 rounded-full border border-amber-500/50 bg-amber-950/60 px-2.5 py-0.5 text-[11px] font-semibold text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.35)]">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-80" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400 shadow-[0_0_6px_#F59E0B]" />
-                </span>
-                Active Learning Light
+            <h2 className="mt-1 text-base sm:text-lg font-bold text-white leading-snug">
+              {milestone.title}
+            </h2>
+            <div className="mt-1.5 sm:mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-400">
+              <span className="flex items-center gap-1">
+                <Clock className="h-3.5 w-3.5 text-cyan-400" />
+                {milestone.estimatedHours} hours
               </span>
-            )}
+              <span className="rounded bg-slate-800 px-2 py-0.5 text-slate-300 font-medium capitalize text-[11px]">
+                {milestone.category}
+              </span>
+              {milestone.status === "in_progress" && (
+                <span className="flex items-center gap-1.5 rounded-full border border-amber-500/50 bg-amber-950/60 px-2 py-0.5 text-[10px] sm:text-[11px] font-semibold text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.35)]">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-80" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400 shadow-[0_0_6px_#F59E0B]" />
+                  </span>
+                  Active Learning Light
+                </span>
+              )}
+            </div>
           </div>
+          <button
+            onClick={onClose}
+            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition flex-shrink-0"
+            aria-label="Close panel"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
-        <button
-          onClick={onClose}
-          className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition"
-          aria-label="Close panel"
-        >
-          <X className="h-5 w-5" />
-        </button>
-      </div>
 
-      {/* Action Controls */}
-      <div className="my-4 grid grid-cols-3 gap-2">
-        <button
-          onClick={handleMarkKnown}
-          className={`flex items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-semibold transition ${
-            milestone.status === "known"
-              ? "border-emerald-500 bg-emerald-500/20 text-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-              : "border-slate-700 bg-slate-800/80 text-slate-300 hover:border-slate-600 hover:bg-slate-700"
-          }`}
-        >
-          <Sparkles className="h-3.5 w-3.5 text-emerald-400" />
-          Mark Known
-        </button>
+        {/* Action Controls */}
+        <div className="my-3 sm:my-4 grid grid-cols-3 gap-1.5 sm:gap-2">
+          <button
+            onClick={handleMarkKnown}
+            className={`flex items-center justify-center gap-1 sm:gap-1.5 rounded-lg border px-1.5 sm:px-3 py-2 text-[11px] sm:text-xs font-semibold transition ${
+              milestone.status === "known"
+                ? "border-emerald-500 bg-emerald-500/20 text-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+                : "border-slate-700 bg-slate-800/80 text-slate-300 hover:border-slate-600 hover:bg-slate-700"
+            }`}
+          >
+            <Sparkles className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
+            <span className="truncate">Mark Known</span>
+          </button>
 
-        <button
-          onClick={handleStart}
-          className={`flex items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-semibold transition ${
-            milestone.status === "in_progress"
-              ? "border-amber-400 bg-amber-500/25 text-amber-200 shadow-[0_0_15px_rgba(245,158,11,0.4)] ring-1 ring-amber-400/50"
-              : "border-slate-700 bg-slate-800/80 text-slate-300 hover:border-slate-600 hover:bg-slate-700"
-          }`}
-        >
-          {milestone.status === "in_progress" ? (
-            <span className="relative flex h-2.5 w-2.5 mr-0.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-80" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400 shadow-[0_0_8px_#F59E0B]" />
-            </span>
-          ) : (
-            <PlayCircle className="h-3.5 w-3.5 text-amber-400" />
-          )}
-          In Progress
-        </button>
+          <button
+            onClick={handleStart}
+            className={`flex items-center justify-center gap-1 sm:gap-1.5 rounded-lg border px-1.5 sm:px-3 py-2 text-[11px] sm:text-xs font-semibold transition ${
+              milestone.status === "in_progress"
+                ? "border-amber-400 bg-amber-500/25 text-amber-200 shadow-[0_0_15px_rgba(245,158,11,0.4)] ring-1 ring-amber-400/50"
+                : "border-slate-700 bg-slate-800/80 text-slate-300 hover:border-slate-600 hover:bg-slate-700"
+            }`}
+          >
+            {milestone.status === "in_progress" ? (
+              <span className="relative flex h-2 w-2 mr-0.5 flex-shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-80" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400 shadow-[0_0_8px_#F59E0B]" />
+              </span>
+            ) : (
+              <PlayCircle className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
+            )}
+            <span className="truncate">In Progress</span>
+          </button>
 
-        <button
-          onClick={handleComplete}
-          className={`flex items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-semibold transition ${
-            milestone.status === "completed"
-              ? "border-emerald-500 bg-emerald-500/20 text-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.3)]"
-              : "border-emerald-600/60 bg-emerald-950/40 text-emerald-300 hover:bg-emerald-900/50"
-          }`}
-        >
-          <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-          Completed
-        </button>
-      </div>
+          <button
+            onClick={handleComplete}
+            className={`flex items-center justify-center gap-1 sm:gap-1.5 rounded-lg border px-1.5 sm:px-3 py-2 text-[11px] sm:text-xs font-semibold transition ${
+              milestone.status === "completed"
+                ? "border-emerald-500 bg-emerald-500/20 text-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+                : "border-emerald-600/60 bg-emerald-950/40 text-emerald-300 hover:bg-emerald-900/50"
+            }`}
+          >
+            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
+            <span className="truncate">Completed</span>
+          </button>
+        </div>
 
-      {/* Scrollable Content Body */}
-      <div className="flex-1 space-y-5 overflow-y-auto pr-1">
+        {/* Scrollable Content Body */}
+        <div className="flex-1 space-y-4 sm:space-y-5 overflow-y-auto pr-1">
         {/* Why It Matters */}
         <div className="rounded-xl border border-cyan-500/30 bg-cyan-950/20 p-3.5">
           <div className="flex items-center gap-2 text-xs font-semibold text-cyan-300">
@@ -1086,5 +1094,6 @@ export function MilestoneInspector({
         </div>
       </div>
     </div>
+    </>
   );
 }
