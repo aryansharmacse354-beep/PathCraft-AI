@@ -83,13 +83,41 @@ export const GenerateRoadmapInputSchema = z.object({
 });
 export type GenerateRoadmapInput = z.infer<typeof GenerateRoadmapInputSchema>;
 
+export const CourseCategorySchema = z.enum([
+  "free_youtube",
+  "paid_accredited",
+  "practice_sandbox",
+  "official_portal"
+]);
+export type CourseCategory = z.infer<typeof CourseCategorySchema>;
+
+export const CourseCostTypeSchema = z.enum([
+  "Free on YouTube",
+  "Free Course",
+  "Paid / Certified",
+  "Freemium / Practice"
+]);
+export type CourseCostType = z.infer<typeof CourseCostTypeSchema>;
+
+export const CourseMatrixItemSchema = z.object({
+  title: z.string().describe("Descriptive title of course, playlist, or practice portal"),
+  platform: z.string().describe("Platform name, e.g. YouTube, Coursera, MIT OCW, edX, LeetCode, GitHub"),
+  category: CourseCategorySchema,
+  url: z.string().url().describe("Direct working HTTPS link to the course or portal"),
+  costType: CourseCostTypeSchema.default("Free on YouTube"),
+  skillCoverage: z.string().describe("Specific skill or concept taught by this course"),
+  estimatedDuration: z.string().optional().describe("e.g. '12 hours', '4 weeks', 'Self-paced'")
+});
+export type CourseMatrixItem = z.infer<typeof CourseMatrixItemSchema>;
+
 export const MilestoneGuidanceSchema = z.object({
   milestoneId: z.string(),
   architectureGuidance: z.string(),
   folderStructure: z.string(),
   interviewScenarios: z.array(z.string()),
   rookieMistakes: z.array(z.string()),
-  masteryChecklist: z.array(z.string())
+  masteryChecklist: z.array(z.string()),
+  courseMatrix: z.array(CourseMatrixItemSchema).optional()
 });
 export type MilestoneGuidance = z.infer<typeof MilestoneGuidanceSchema>;
 

@@ -60,8 +60,8 @@ Output must strictly conform to the RoadmapSchema JSON format. Do not include ma
 `;
 
 export const MILESTONE_GUIDANCE_SYSTEM_PROMPT = `
-You are PathCraft AI's Lead Domain Architect and Senior Professional Evaluator.
-The user needs actionable, deep professional guidance for a specific career milestone in their field.
+You are PathCraft AI's Lead Domain Architect and Senior Curriculum Specialist.
+The user needs actionable, deep professional guidance and a structured Course Mapping Matrix for a specific career milestone in their field.
 
 Adapt your advice strictly to the domain of the target role (e.g. clinical nursing protocols for healthcare, statutory doctrine for law, typography & grid systems for graphic design, pedagogical lesson scaffolding for education, financial valuation for finance, or architecture patterns for engineering).
 
@@ -72,7 +72,45 @@ Provide a comprehensive, practical response in strict JSON:
   "folderStructure": "Recommended deliverable layout, portfolio dossier organization, case-file structure, or project file architecture.",
   "interviewScenarios": ["Scenario 1: Detailed real-world problem, client/patient situation, or crisis and expected professional response", "Scenario 2: ...", "Scenario 3: ..."],
   "rookieMistakes": ["Common novice mistake or professional pitfall 1 and why it happens", "Mistake 2...", "Mistake 3..."],
-  "masteryChecklist": ["Mastery criteria 1", "Checklist item 2", "Checklist item 3", "Checklist item 4"]
+  "masteryChecklist": ["Mastery criteria 1", "Checklist item 2", "Checklist item 3", "Checklist item 4"],
+  "courseMatrix": [
+    {
+      "title": "Comprehensive YouTube Course / Playlist title",
+      "platform": "YouTube / MIT OCW / Khan Academy / freeCodeCamp",
+      "category": "free_youtube",
+      "url": "https://www.youtube.com/results?search_query=... or authentic channel URL",
+      "costType": "Free on YouTube",
+      "skillCoverage": "Detailed concept, clinical protocol, legal procedure, or software architecture taught",
+      "estimatedDuration": "12 hours"
+    },
+    {
+      "title": "Accredited Professional Course / Specialization",
+      "platform": "Coursera / edX / Udemy / Professional Board",
+      "category": "paid_accredited",
+      "url": "https://www.coursera.org/...",
+      "costType": "Paid / Certified",
+      "skillCoverage": "Industry-standard credential and accredited certification",
+      "estimatedDuration": "4 weeks"
+    },
+    {
+      "title": "Interactive Hands-on Practice Portal / Lab",
+      "platform": "LeetCode / GitHub / CaseLab / SimScale / NCLEX Practice / Figma Community",
+      "category": "practice_sandbox",
+      "url": "https://...",
+      "costType": "Freemium / Practice",
+      "skillCoverage": "Hands-on exercises, simulations, or problem-solving drills",
+      "estimatedDuration": "Self-paced"
+    },
+    {
+      "title": "Official Regulatory Standard / Documentation Portal",
+      "platform": "WHO / CDC / ABA / IEEE / FDA / OSHA / MDN / Cornell LII",
+      "category": "official_portal",
+      "url": "https://...",
+      "costType": "Free Course",
+      "skillCoverage": "Authoritative regulatory protocols and technical specifications",
+      "estimatedDuration": "Reference Guide"
+    }
+  ]
 }
 `;
 

@@ -14,6 +14,7 @@ import {
   PATH_COMPARISON_SYSTEM_PROMPT
 } from "./prompts";
 import { rescaleRoadmapToConstraints } from "../utils/graphEngine";
+import { queryCourseDataset } from "../data/courseDataset";
 
 /**
  * Clean and parse JSON from LLM response (strips markdown code blocks if present)
@@ -1786,8 +1787,10 @@ CRITICAL: Do NOT insert software engineering or programming concepts unless the 
  */
 export async function generateMilestoneGuidanceAI(milestoneId: string, nodeTitle: string, targetRole: string): Promise<MilestoneGuidance> {
   const geminiKey = process.env.GEMINI_API_KEY;
+  const datasetCourses = queryCourseDataset(nodeTitle, "", targetRole);
+
   const userPrompt = `
-Provide deep professional guidance, deliverable dossier structure, interview scenarios, rookie mistakes, and a mastery checklist for:
+Provide deep professional guidance, deliverable dossier structure, interview scenarios, rookie mistakes, mastery checklist, and course mapping matrix for:
 Milestone: "${nodeTitle}" (ID: ${milestoneId})
 Target Role: "${targetRole}"
 
@@ -1800,7 +1803,11 @@ Do NOT assume software engineering unless the role is software/IT.
       const parsed = cleanAndParseJSON(rawText);
       const validated = MilestoneGuidanceSchema.safeParse(parsed);
       if (validated.success) {
-        return validated.data;
+        const result = validated.data;
+        if (!result.courseMatrix || result.courseMatrix.length === 0) {
+          result.courseMatrix = datasetCourses;
+        }
+        return result;
       }
     } catch (err) {
       console.warn("Gemini guidance call failed, using smart domain fallback:", err);
@@ -1840,7 +1847,8 @@ Do NOT assume software engineering unless the role is software/IT.
         "Error-free execution of pediatric and adult emergency dosage calculations.",
         "Flawless adherence to aseptic sterile technique and PPE isolation protocols.",
         "Consistent delivery of structured SBAR clinical handovers verified by preceptors."
-      ]
+      ],
+      courseMatrix: datasetCourses
     };
   }
 
@@ -1956,7 +1964,8 @@ Do NOT assume software engineering unless the role is software/IT.
       "High-quality portfolio case study demonstrating tangible, verified outcomes.",
       "Clear articulation of domain-specific trade-offs during technical interviews.",
       "Active engagement with professional associations and recognized industry standards."
-    ]
+    ],
+    courseMatrix: datasetCourses
   };
 }
 

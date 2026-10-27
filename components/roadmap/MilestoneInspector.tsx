@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Milestone, MilestoneStatus, MilestoneGuidance, LearningResource } from "../../lib/types/roadmap";
+import { Milestone, MilestoneStatus, MilestoneGuidance, LearningResource, CourseMatrixItem } from "../../lib/types/roadmap";
+import { queryCourseDataset } from "../../lib/data/courseDataset";
 import confetti from "canvas-confetti";
 import {
   X,
@@ -21,7 +22,11 @@ import {
   Target,
   BookOpen,
   GraduationCap,
-  Globe
+  Globe,
+  Youtube,
+  Search,
+  Terminal,
+  Video
 } from "lucide-react";
 
 interface MilestoneInspectorProps {
@@ -691,11 +696,43 @@ export function MilestoneInspector({
   const [loadingGuidance, setLoadingGuidance] = useState(false);
   const [guidance, setGuidance] = useState<MilestoneGuidance | null>(null);
   const [expandedInterviewIdx, setExpandedInterviewIdx] = useState<number | null>(0);
+  const [courseFilter, setCourseFilter] = useState<"all" | "free_youtube" | "paid_accredited" | "practice_sandbox" | "official_portal">("all");
 
   // Reset guidance when selected milestone changes
   React.useEffect(() => {
     setGuidance(null);
+    setCourseFilter("all");
   }, [milestone?.id]);
+
+  const courseMatrix: CourseMatrixItem[] = React.useMemo(() => {
+    if (!milestone) return [];
+    if (guidance?.courseMatrix && guidance.courseMatrix.length > 0) {
+      return guidance.courseMatrix;
+    }
+    return queryCourseDataset(
+      milestone.title,
+      milestone.category,
+      targetRole,
+      milestone.actionableDetails?.keySkillsToMaster || []
+    );
+  }, [milestone, targetRole, guidance]);
+
+  const filteredCourses = React.useMemo(() => {
+    if (courseFilter === "all") return courseMatrix;
+    return courseMatrix.filter((c) => c.category === courseFilter);
+  }, [courseMatrix, courseFilter]);
+
+  const youtubeCount = courseMatrix.filter((c) => c.category === "free_youtube").length;
+  const paidCount = courseMatrix.filter((c) => c.category === "paid_accredited").length;
+  const practiceCount = courseMatrix.filter((c) => c.category === "practice_sandbox").length;
+  const officialCount = courseMatrix.filter((c) => c.category === "official_portal").length;
+
+  const ytSearchUrl = milestone
+    ? `https://www.youtube.com/results?search_query=${encodeURIComponent(targetRole + " " + milestone.title + " course tutorial lecture")}`
+    : "#";
+  const googleSearchUrl = milestone
+    ? `https://www.google.com/search?q=${encodeURIComponent(targetRole + " " + milestone.title + " accredited syllabus curriculum official")}`
+    : "#";
 
   if (!milestone) return null;
 
@@ -892,50 +929,221 @@ export function MilestoneInspector({
           </div>
         </div>
 
-        {/* Official Documentation & Verified Learning Portals */}
-        <div className="rounded-xl border border-blue-500/30 bg-blue-950/20 p-3.5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-xs font-semibold text-blue-300">
-              <BookOpen className="h-4 w-4 text-blue-400" />
-              Official Documentation & Learning Portals
+        {/* Curated Course & Study Mapping Matrix (Chart Form) */}
+        <div className="rounded-xl border border-cyan-500/30 bg-[#0c1322] p-3.5 sm:p-4 shadow-lg space-y-3.5">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+            <div>
+              <div className="flex items-center gap-2">
+                <div className="flex h-6 w-6 items-center justify-center rounded-md bg-cyan-500/20 text-cyan-400">
+                  <GraduationCap className="h-4 w-4" />
+                </div>
+                <h3 className="text-xs sm:text-sm font-bold text-white">
+                  Targeted Learning Courses & Portals Chart
+                </h3>
+              </div>
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                Exact courses mapped for this skill across YouTube (Free), Accredited MOOCs, Practice Labs & Official Portals
+              </p>
             </div>
-            <span className="rounded bg-blue-900/60 px-1.5 py-0.5 text-[10px] font-medium text-cyan-300">
-              Verified
+            <span className="self-start sm:self-auto rounded-full bg-cyan-950/80 border border-cyan-500/40 px-2 py-0.5 text-[10px] font-semibold text-cyan-300">
+              Role: {targetRole}
             </span>
           </div>
-          <p className="mt-1.5 text-[11px] text-slate-300 leading-relaxed">
-            Authoritative regulatory bodies, official standards, and accredited learning platforms:
-          </p>
-          <div className="mt-3 space-y-2">
-            {displayResources.map((res, idx) => (
-              <a
-                key={idx}
-                href={res.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-start justify-between rounded-lg border border-blue-500/20 bg-slate-900/90 p-2.5 text-xs text-slate-200 hover:border-blue-400 hover:bg-blue-950/50 hover:text-white transition"
-              >
-                <div className="flex items-start gap-2.5 overflow-hidden pr-2">
-                  {res.type === "Official Standards & Regulators" ? (
-                    <Globe className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0 group-hover:text-cyan-300" />
-                  ) : (
-                    <GraduationCap className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0 group-hover:text-blue-300" />
-                  )}
-                  <div className="overflow-hidden">
-                    <span className="font-semibold text-xs text-slate-200 group-hover:text-blue-200 block truncate">
-                      {res.title}
-                    </span>
-                    <span className="text-[10px] text-slate-400 block truncate mt-0.5 font-mono">
-                      {res.url.replace(/^https?:\/\//, "")}
-                    </span>
-                    <span className="mt-1 inline-block rounded bg-slate-800/90 px-1.5 py-0.5 text-[9px] font-medium text-cyan-300">
-                      {res.type}
-                    </span>
+
+          {/* Quick YouTube & Google Deep Search Bar */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <a
+              href={ytSearchUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between rounded-lg border border-rose-500/30 bg-rose-950/20 px-3 py-2 text-xs text-rose-200 hover:border-rose-400 hover:bg-rose-950/40 hover:text-white transition"
+              title="Search directly on YouTube for video lectures matching this exact milestone"
+            >
+              <div className="flex items-center gap-2">
+                <Youtube className="h-4 w-4 text-rose-500 group-hover:scale-110 transition flex-shrink-0" />
+                <span className="font-semibold text-[11px]">Watch Full YouTube Lectures</span>
+              </div>
+              <ExternalLink className="h-3 w-3 text-rose-400 opacity-70 group-hover:opacity-100 flex-shrink-0" />
+            </a>
+
+            <a
+              href={googleSearchUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between rounded-lg border border-blue-500/30 bg-blue-950/20 px-3 py-2 text-xs text-blue-200 hover:border-blue-400 hover:bg-blue-950/40 hover:text-white transition"
+              title="Search Google for accredited university syllabi and case studies"
+            >
+              <div className="flex items-center gap-2">
+                <Search className="h-4 w-4 text-blue-400 group-hover:scale-110 transition flex-shrink-0" />
+                <span className="font-semibold text-[11px]">Google Syllabi & Portals</span>
+              </div>
+              <ExternalLink className="h-3 w-3 text-blue-400 opacity-70 group-hover:opacity-100 flex-shrink-0" />
+            </a>
+          </div>
+
+          {/* Filter Pills */}
+          <div className="flex flex-wrap gap-1.5 pt-1">
+            <button
+              type="button"
+              onClick={() => setCourseFilter("all")}
+              className={`rounded-lg px-2.5 py-1 text-[11px] font-medium transition ${
+                courseFilter === "all"
+                  ? "bg-cyan-500/30 border border-cyan-400 text-cyan-200"
+                  : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              All ({courseMatrix.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setCourseFilter("free_youtube")}
+              className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-medium transition ${
+                courseFilter === "free_youtube"
+                  ? "bg-rose-500/30 border border-rose-400 text-rose-200"
+                  : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-rose-300"
+              }`}
+            >
+              <Youtube className="h-3 w-3 text-rose-400" />
+              Free on YouTube ({youtubeCount})
+            </button>
+            <button
+              type="button"
+              onClick={() => setCourseFilter("paid_accredited")}
+              className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-medium transition ${
+                courseFilter === "paid_accredited"
+                  ? "bg-purple-500/30 border border-purple-400 text-purple-200"
+                  : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-purple-300"
+              }`}
+            >
+              <GraduationCap className="h-3 w-3 text-purple-400" />
+              Paid / Accredited ({paidCount})
+            </button>
+            <button
+              type="button"
+              onClick={() => setCourseFilter("practice_sandbox")}
+              className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-medium transition ${
+                courseFilter === "practice_sandbox"
+                  ? "bg-amber-500/30 border border-amber-400 text-amber-200"
+                  : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-amber-300"
+              }`}
+            >
+              <Terminal className="h-3 w-3 text-amber-400" />
+              Practice & Labs ({practiceCount})
+            </button>
+            <button
+              type="button"
+              onClick={() => setCourseFilter("official_portal")}
+              className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-medium transition ${
+                courseFilter === "official_portal"
+                  ? "bg-blue-500/30 border border-blue-400 text-blue-200"
+                  : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-blue-300"
+              }`}
+            >
+              <Globe className="h-3 w-3 text-cyan-400" />
+              Standards ({officialCount})
+            </button>
+          </div>
+
+          {/* Course Matrix Cards / Chart Rows */}
+          <div className="space-y-2.5">
+            {filteredCourses.map((item, idx) => {
+              const isYouTube = item.category === "free_youtube";
+              const isPaid = item.category === "paid_accredited";
+              const isPractice = item.category === "practice_sandbox";
+
+              return (
+                <div
+                  key={idx}
+                  className="rounded-xl border border-slate-800 bg-slate-900/80 p-3 hover:border-slate-700 transition"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-start gap-2.5 overflow-hidden pr-2">
+                      <div className="mt-0.5 flex-shrink-0">
+                        {isYouTube ? (
+                          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-rose-500/20 text-rose-400">
+                            <Youtube className="h-4 w-4" />
+                          </div>
+                        ) : isPaid ? (
+                          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-500/20 text-purple-400">
+                            <GraduationCap className="h-4 w-4" />
+                          </div>
+                        ) : isPractice ? (
+                          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500/20 text-amber-400">
+                            <Terminal className="h-4 w-4" />
+                          </div>
+                        ) : (
+                          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-cyan-500/20 text-cyan-400">
+                            <Globe className="h-4 w-4" />
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="overflow-hidden">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <span className="font-semibold text-xs text-white line-clamp-1">
+                            {item.title}
+                          </span>
+                          <span
+                            className={`rounded px-1.5 py-0.2 text-[9px] font-semibold ${
+                              isYouTube
+                                ? "bg-rose-500/20 text-rose-300 border border-rose-500/30"
+                                : isPaid
+                                ? "bg-purple-500/20 text-purple-300 border border-purple-500/30"
+                                : isPractice
+                                ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                                : "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30"
+                            }`}
+                          >
+                            {item.costType}
+                          </span>
+                          {item.estimatedDuration && (
+                            <span className="rounded bg-slate-800 px-1.5 py-0.2 text-[9px] font-mono text-slate-400">
+                              {item.estimatedDuration}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Platform & Domain */}
+                        <div className="mt-1 flex items-center gap-2 text-[10px] text-slate-400">
+                          <span className="font-semibold text-slate-300">{item.platform}</span>
+                          <span>•</span>
+                          <span className="font-mono text-slate-500 truncate">{item.url.replace(/^https?:\/\//, "")}</span>
+                        </div>
+
+                        {/* Skill Covered */}
+                        <div className="mt-1.5 text-[11px] text-slate-300 leading-relaxed bg-slate-950/60 rounded-md p-1.5 border border-slate-800/80">
+                          <span className="font-semibold text-cyan-300">Skill Mapped: </span>
+                          {item.skillCoverage}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Launch Link */}
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-xs font-semibold flex-shrink-0 transition ${
+                        isYouTube
+                          ? "bg-rose-500/20 text-rose-300 hover:bg-rose-500 hover:text-white border border-rose-500/40"
+                          : isPaid
+                          ? "bg-purple-500/20 text-purple-300 hover:bg-purple-500 hover:text-white border border-purple-500/40"
+                          : isPractice
+                          ? "bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-slate-950 border border-amber-500/40"
+                          : "bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 border border-cyan-500/40"
+                      }`}
+                      title={`Open ${item.title}`}
+                    >
+                      <span className="hidden xs:inline">
+                        {isYouTube ? "Watch" : isPractice ? "Practice" : "Open"}
+                      </span>
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
                   </div>
                 </div>
-                <ExternalLink className="h-3.5 w-3.5 text-blue-400 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-1" />
-              </a>
-            ))}
+              );
+            })}
           </div>
         </div>
 
